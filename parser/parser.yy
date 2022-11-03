@@ -33,10 +33,66 @@
     #define yylex scanner.yylex
 }
 
+// --- PRIMITIVES --- //
 %token                  NL
 %token                  END
 %token <int>            NUMBER
+%token <std::string>    IDENTIFIER
+%token <int>            TARGET
+%token <std::string>    COLOR
+%token <std::string>    STRING
 
+// --- COMMENTS --- //
+%token                  COMMENT
+
+// --- WALL CHECKS --- //
+%token                  WALL
+%token                  EMPTY
+
+// --- ARITHMETICS --- //
+%token                  PLUS
+%token                  MINUS
+%token                  MULTIPLY
+%token                  DIVIDE
+%token                  NOT
+%token                  EXPRESSION_START
+%token                  EXPRESSION_END
+
+// --- MOVE INSTRUCTIONS --- //
+%token                  FORWARD
+%token                  BACKWARD
+%token                  JUMP
+%token                  ROTATE
+%token                  TIMES
+
+// --- COLOR INSTRUCTIONS --- //
+%token                  COLOR_CHANGE
+%token                  SHELL
+
+// --- TURTLES CREATION --- //
+%token                  TURTLES
+
+// --- GARDEN LOADING --- //
+%token                  GARDEN
+
+// --- DIRECTIONS --- //
+%token                  LEFT
+%token                  RIGHT
+%token                  FRONT
+%token                  BACK
+
+// --- BRANCHING --- //
+%token                  BRANCH_START
+%token                  IF
+%token                  ELSE
+%token                  BRANCH_END
+
+// --- LOOPS --- //
+%token                  WHILE
+%token                  REPEAT
+
+// --- FUNCTIONS --- /
+%token                  FUNCTION_START
 
 %%
 
