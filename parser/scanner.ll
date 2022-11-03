@@ -1,6 +1,7 @@
 %{
 
 #include "scanner.hh"
+#include <string>
 #include <cstdlib>
 
 #define YY_NO_UNISTD_H
@@ -25,6 +26,9 @@ using token = yy::Parser::token;
     yylval = lval;
 %}
 
+-- {
+    return token::COMMENT;
+}
 
 fin return token::END;
 
@@ -36,6 +40,119 @@ fin return token::END;
 "\n"          {
     loc->lines();
     return token::NL;
+}
+
+mur {
+    return token::WALL;
+}
+
+vide {
+    return token::EMPTY;
+}
+
+pas de {
+    return token::NOT;
+}
+
+devant {
+    return token::FRONT;
+}
+
+derriere {
+    return token::BACK;
+}
+
+droite {
+    return token::RIGHT;
+}
+
+avance {
+    return token::FORWARD;
+}
+
+recule {
+    return token::BACKWARD;
+}
+
+saute {
+    return token::JUMP;
+}
+
+tourne à {
+    return token::ROTATE;
+}
+
+fois {
+    return token::TIMES;
+}
+
+gauche {
+    return token::LEFT;
+}
+
+si {
+    return token::IF;
+}
+
+sinon {
+    return token::ELSE;
+}
+
+tant que {
+    return token::WHILE;
+}
+
+repete {
+    return token::REPEAT;
+}
+
+fonction {
+    return::FUNCTION_START;
+}
+
+: {
+    return token::BRANCH_START;
+}
+
+fin {
+    return token::BRANCH_END;
+}
+
+couleur {
+    return token::COLOR;
+}
+
+carapace {
+    return token::SHELL;
+}
+
+tortues {
+    return token::TURTLES;
+}
+
+jardin {
+    return token::GARDEN;
+}
+
+@[0-9]+ {
+    yylval->build<int>(std::atoi(yytext+1));
+    return token::TARGET;
+}
+
+#[0-9A-Fa-f]{6} {
+    yylval->build<std::string>(yytext+1);
+    return token::COLOR;
+}
+
+'[a-A0-9]*' {
+    std::string str(yytext);
+    yylval->build<std::string>(str.substr(1, str.size() - 2));
+    return token::STRING;
+}
+
+[a-A][a-A0-9]* {
+    yylval->build<std::string>(yytext);
+    return token::IDENTIFIER;
 }
 
 %%
