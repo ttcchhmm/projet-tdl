@@ -1,34 +1,19 @@
 #include "jardinRendering.hh"
 #include <fstream>
 
-JardinRendering::JardinRendering(QObject *parent)
-    : QThread(parent)
+JardinRendering::JardinRendering(QObject *parent) : QObject(parent)
 {
-    restart = false;
-    abort = false;
-    driver = new Driver(this); 
-    scanner = new Scanner(std::cin, std::cout);
-    parser = new yy::Parser(*scanner, *driver);
+        
 }
 
 JardinRendering::~JardinRendering()
 {
-    delete driver;
-    delete scanner;
-    delete parser;
     for (unsigned int i=0; i<tortues.size(); i++)
         delete tortues[i];
-    mutex.lock();
-    abort = true;
-    condition.wakeOne();
-    mutex.unlock();
-
-    wait();
-
 }
 
 void JardinRendering::construction(char const *file){
-std::cout << "" << std::endl; 
+    std::cout << "" << std::endl; 
     if (strcmp(file,"")){
         std::ifstream fichier(file, std::ios::in);  // Lecture du fichier contenant le plan du jardin
         if(fichier) {    
@@ -54,29 +39,7 @@ std::cout << "" << std::endl;
         else
                 std::cerr << "Impossible d'ouvrir le fichier !" << std::endl;
     }
-    else {Tortue * T = new Tortue; T->setX(0);T->setY(0);tortues.push_back(T);emit newTortue(0,0);fenetre = QSize(20,15); }
-}
-
-void JardinRendering::parsingJardin()
-{
-    QMutexLocker locker(&mutex);
-
-    if (!isRunning()) {
-        start(LowPriority);
-    } else {
-        restart = true;
-        condition.wakeOne();
-    }
-}
-
-void JardinRendering::run()
-{
-        mutex.lock();
-	
-        parser->parse();
-
-        mutex.unlock();
-	emit parse();
+    else {Tortue * T = new Tortue; T->setX(0);T->setY(0);tortues.push_back(T);emit newTortue(0,0);fenetre = QSize(20,15);}
 }
 
 void JardinRendering::changePosition(int numeroTortue, int x, int y){

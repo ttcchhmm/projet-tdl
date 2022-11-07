@@ -1,7 +1,7 @@
 #include "tortue.hh"
 
 Tortue::Tortue(int x, int y):posX(x),posY(y),width(35),height(35),orientation(0){
-	imageTortue = QPixmap("./IMG/tortue.png");
+	imageTortue = QPixmap("../GUI/IMG/tortue.png");
 	corps = imageTortue.createMaskFromColor(QColor(255, 200, 67),Qt::MaskOutColor);
 	carapace = imageTortue.createMaskFromColor(QColor(0, 255, 0),Qt::MaskOutColor);
 	motif = imageTortue.createMaskFromColor(QColor(0, 170, 0),Qt::MaskOutColor);

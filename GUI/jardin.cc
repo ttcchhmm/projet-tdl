@@ -1,17 +1,18 @@
 #include "jardin.hh"
 #include <unistd.h>
 
-
-Jardin::Jardin(char const *file, QWidget * parent, Qt::WindowFlags flags)
-:QWidget(parent,flags){
-    connect(&thread, SIGNAL(parse()), this, SLOT(updateJardin()));
-    connect(&thread, SIGNAL(newTortue(int, int)), this, SLOT(nouvelleTortue(int, int)));
-    connect(&thread, SIGNAL(sizeFenetre(int, int)), this, SLOT(tailleFenetre(int, int)));
-    thread.construction(file);
-    this->setFixedSize(thread.tailleJardin().width()*35,thread.tailleJardin().height()*35);
-    mur = QPixmap("./IMG/mur.jpg");
-    vide = QPixmap("./IMG/vide.jpg");
-    Terrain = new QImage(thread.tailleJardin().width()*35,thread.tailleJardin().height()*35, QImage::Format_RGB32); //QImage::Format_Mono);
+Jardin::Jardin(char const *file, QWidget * parent)
+:QWidget(parent){
+    render = new JardinRendering();
+    thread = new JardinHandler(render);
+    connect(thread, SIGNAL(parse()), this, SLOT(updateJardin()));
+    connect(render, SIGNAL(newTortue(int, int)), this, SLOT(nouvelleTortue(int, int)));
+    connect(render, SIGNAL(sizeFenetre(int, int)), this, SLOT(tailleFenetre(int, int)));
+    render->construction(file);
+    this->setFixedSize(render->tailleJardin().width()*35,render->tailleJardin().height()*35);
+    mur = QPixmap("../GUI/IMG/mur.jpg");
+    vide = QPixmap("../GUI/IMG/vide.jpg");
+    Terrain = new QImage(render->tailleJardin().width()*35,render->tailleJardin().height()*35, QImage::Format_RGB32); //QImage::Format_Mono);
     Terrain->fill(Qt::white);
 }
 
@@ -47,8 +48,9 @@ void Jardin::dessinerTortue(QPainter& p, Tortue T){
 }
 
 void Jardin::dessinerTortues(QPainter& p){
-    for (unsigned int i = 0; i<tortues.size(); i++)
+    for (unsigned int i = 0; i<tortues.size(); i++) {
         dessinerTortue(p,tortues.at(i));
+    }
 }
 
 void Jardin::dessinerTrait(QPainter& p, QRect pos, EtatTortue mouvement){
@@ -78,11 +80,11 @@ void Jardin::dessinerMouvement(QPainter& p, EtatTortue mouvement){
 void Jardin::paintEvent(QPaintEvent *){
     if (initialisation) {
         QPainter carte(Terrain);
-        for (unsigned int i = 0; i < thread.getMurs().size(); i++){
-	    carte.drawPixmap(thread.getMurs().at(i).getPos(), mur);
+        for (unsigned int i = 0; i < render->getMurs().size(); i++){
+            carte.drawPixmap(render->getMurs().at(i).getPos(), mur);
         }
-        for (unsigned int i = 0; i < thread.getVides().size(); i++){
-	    carte.drawPixmap(thread.getVides().at(i).getPos(), vide);
+        for (unsigned int i = 0; i < render->getVides().size(); i++){
+	    carte.drawPixmap(render->getVides().at(i).getPos(), vide);
         }
         carte.end();
         QPainter p(this);
@@ -91,13 +93,13 @@ void Jardin::paintEvent(QPaintEvent *){
         p.end();
         
         initialisation=false;
-        thread.parsingJardin();
+        thread->parsingJardin();
     }
     else{
             QPainter p(this);
-            if (thread.getMouvements()->size()!=0)  {
+            if (render->getMouvements()->size()!=0)  {
                 QPainter carte(Terrain);
-                dessinerMouvement(carte,thread.getMouvements()->front());
+                dessinerMouvement(carte,render->getMouvements()->front());
                 carte.end();    
             }
             p.drawImage(0, 0, *Terrain);
@@ -108,12 +110,12 @@ void Jardin::paintEvent(QPaintEvent *){
 
 void Jardin::updateJardin()
 {   
-    while (thread.getMouvements()->size()!=0){
+    while (render->getMouvements()->size()!=0){
          usleep(100000);
          repaint();
-         thread.getMouvements()->pop();
+         render->getMouvements()->pop();
     }
-    thread.parsingJardin();
+    thread->parsingJardin();
 }
 
 

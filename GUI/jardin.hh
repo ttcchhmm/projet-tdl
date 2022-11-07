@@ -2,7 +2,7 @@
 #define JARDIN_H
 
 #include "tortue.hh"
-#include "jardinRendering.hh"
+#include "jardinHandler.hh"
 #include <QtGui>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QLayout>
@@ -14,7 +14,8 @@ class Jardin:public QWidget
     private:
         QPixmap mur;      
         QPixmap vide;        
-        JardinRendering thread;
+        JardinHandler * thread;
+        JardinRendering * render;
         std::vector<Tortue> tortues;
         QImage * Terrain;
         bool initialisation = true;
@@ -28,7 +29,7 @@ class Jardin:public QWidget
         void paintEvent(QPaintEvent *event) override;
 
     public:
-        Jardin(char const *file = "", QWidget * parent=0, Qt::WindowFlags flags=0);
+        Jardin(char const *file = "", QWidget * parent=0);
         ~Jardin();
         void dessinerMouvement(QPainter& p, EtatTortue mouvement);
         void dessinerTrait(QPainter& p, QRect pos, EtatTortue mouvement);

@@ -1,8 +1,8 @@
 #include "driver.hh"
-#include "jardinRendering.hh"
+#include "jardinHandler.hh"
 #include <iostream>
 
-Driver::Driver(JardinRendering * J) {
+Driver::Driver(JardinHandler * J) {
     monJardin = J;
 }
 
@@ -20,6 +20,10 @@ double Driver::getVariable(const std::string & name) const {
 
 void Driver::setVariable(const std::string & name, double value) {
     variables[name] = value;
+}
+
+JardinRendering * Driver::getJardin() {
+    return monJardin->getJardinRendering();
 }
 
 /* EXEMPLE
