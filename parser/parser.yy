@@ -96,12 +96,12 @@
 
 %%
 
-programme:
+start:
     NUMBER NL {
         std::cout << "nombre : " << $1 << std::endl;
         driver.setVariable("a",$1);
         std::cout <<driver.getVariable("a") << std::endl;
-    } programme
+    } start
     | END NL {
         YYACCEPT;
     }
