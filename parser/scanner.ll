@@ -50,7 +50,7 @@ vide {
     return token::EMPTY;
 }
 
-pas de {
+"pas de" {
     return token::NOT;
 }
 
@@ -78,7 +78,7 @@ saute {
     return token::JUMP;
 }
 
-tourne à {
+"tourne à" {
     return token::ROTATE;
 }
 
@@ -98,7 +98,7 @@ sinon {
     return token::ELSE;
 }
 
-tant que {
+"tant que" {
     return token::WHILE;
 }
 
@@ -107,7 +107,7 @@ repete {
 }
 
 fonction {
-    return::FUNCTION_START;
+    return token::FUNCTION_START;
 }
 
 : {
