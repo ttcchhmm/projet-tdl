@@ -25,6 +25,8 @@
 %code{
     #include <iostream>
     #include <string>
+
+    #include <QCoreApplication>
     
     #include "scanner.hh"
     #include "driver.hh"
@@ -103,6 +105,7 @@ start:
         std::cout <<driver.getVariable("a") << std::endl;
     } start
     | END NL {
+        QCoreApplication::instance()->quit();
         YYACCEPT;
     }
     
