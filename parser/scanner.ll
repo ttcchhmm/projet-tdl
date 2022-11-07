@@ -144,13 +144,13 @@ jardin {
     return token::COLOR;
 }
 
-'[a-A0-9]*' {
+'[a-zA-Z0-9]*' {
     std::string str(yytext);
     yylval->build<std::string>(str.substr(1, str.size() - 2));
     return token::STRING;
 }
 
-[a-A][a-A0-9]* {
+[a-zA-Z][a-zA-Z0-9]* {
     yylval->build<std::string>(yytext);
     return token::IDENTIFIER;
 }
