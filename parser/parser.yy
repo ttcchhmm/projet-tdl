@@ -100,6 +100,8 @@
 %type <int>             mathlitteral
 %type <int>             mathoperation
 
+%type <int>             move
+
 // --- PRECEDENCES --- //
 %precedence             MINUS
 
@@ -148,9 +150,32 @@ mathlitteral:
     EXPRESSION_START mathoperation EXPRESSION_END {
         $$ = $2;
     }
+
+move:
+    FORWARD mathlitteral {
+        $$ = $2;
+    } |
+
+    BACKWARD mathlitteral {
+        $$ = -$2;
+    }
     
 instruction:
+    move {
+        float orientation = driver.getJardin()->orientation(0);
+        int x = driver.getJardin()->position(0).x();
+        int y = driver.getJardin()->position(0).y();
 
+        if(orientation == 0) {
+            driver.getJardin()->changePosition(0, x + $1, y);
+        } else if(orientation == 90) {
+            driver.getJardin()->changePosition(0, x, y + $1);
+        } else if(orientation == 180) {
+            driver.getJardin()->changePosition(0, x - $1, y);
+        } else if(orientation == 270) {
+            driver.getJardin()->changePosition(0, x, y - $1);
+        }
+    }
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
