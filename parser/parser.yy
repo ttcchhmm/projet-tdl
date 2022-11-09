@@ -93,22 +93,64 @@
 %token                  WHILE
 %token                  REPEAT
 
-// --- FUNCTIONS --- /
+// --- FUNCTIONS --- //
 %token                  FUNCTION_START
+
+// --- TYPES --- //
+%type <int>             mathlitteral
+%type <int>             mathoperation
+
+// --- PRECEDENCES --- //
+%precedence             MINUS
 
 %%
 
 start:
-    NUMBER NL {
-        std::cout << "nombre : " << $1 << std::endl;
-        driver.setVariable("a",$1);
-        std::cout <<driver.getVariable("a") << std::endl;
+    instruction NL {
+
     } start
     | END NL {
         QCoreApplication::instance()->quit();
         YYACCEPT;
     }
+
+mathoperation:
+    mathlitteral PLUS mathlitteral {
+        $$ = $1 + $3;
+    } |
+
+    mathlitteral MULTIPLY mathlitteral {
+        $$ = $1 * $3;
+    } |
+
+    mathlitteral MINUS mathlitteral {
+        $$ = $1 - $3;
+    } |
+
+    mathlitteral DIVIDE mathlitteral {
+        if($3 == 0) {
+            std::cerr << "Division by zero." << std::endl;
+            YYERROR;
+        }
+
+        $$ = $1 / $3;
+    }
+
+mathlitteral:
+    MINUS NUMBER %prec MINUS {
+        $$ = -$2;
+    } |
+
+    NUMBER | mathoperation {
+        $$ = $1;
+    } |
+
+    EXPRESSION_START mathoperation EXPRESSION_END {
+        $$ = $2;
+    }
     
+instruction:
+
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
