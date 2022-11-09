@@ -7,9 +7,10 @@
 #include <QColor>
 #include <QSize>
 #include "contexte.hh"
+#include "jardinRendering.hh"
 
 class JardinHandler;
-class JardinRendering;
+// class JardinRendering;
 
 class Driver {
 private:      
