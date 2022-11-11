@@ -199,6 +199,8 @@ instruction:
                 if(newOrientation < 0) {
                     newOrientation += 360;
                 }
+
+                break;
             }
 
             case directions::RIGHT: {
@@ -207,6 +209,8 @@ instruction:
                 if(newOrientation > 360) {
                     newOrientation -= 360;
                 }
+
+                break;
             }
         }
 
