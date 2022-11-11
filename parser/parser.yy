@@ -166,15 +166,16 @@ instruction:
         int x = driver.getJardin()->position(0).x();
         int y = driver.getJardin()->position(0).y();
 
+        std::cout << orientation << " | " << x << "/" << y << std::endl;
+
         if(orientation == 0) {
-            driver.getJardin()->changePosition(0, x + $1, y);
-        } else if(orientation == 90) {
-            driver.getJardin()->changePosition(0, x, y + $1);
-        } else if(orientation == 180) {
-            driver.getJardin()->changePosition(0, x - $1, y);
-        } else if(orientation == 270) {
             driver.getJardin()->changePosition(0, x, y - $1);
-        }
+        } else if(orientation == 90) {
+            driver.getJardin()->changePosition(0, x + $1, y);
+        } else if(orientation == 180) {
+            driver.getJardin()->changePosition(0, x, y + $1);
+        } else if(orientation == 270) {
+            driver.getJardin()->changePosition(0, x - $1, y);        }
     }
 %%
 
