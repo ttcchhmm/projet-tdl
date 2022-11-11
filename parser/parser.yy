@@ -34,6 +34,8 @@
 
     #undef  yylex
     #define yylex scanner.yylex
+
+    Contexte context;
 }
 
 // --- PRIMITIVES --- //
@@ -98,8 +100,8 @@
 %token                  FUNCTION_START
 
 // --- TYPES --- //
-%type <int>             mathlitteral
-%type <int>             mathoperation
+%type <ExpressionPtr>   mathlitteral
+%type <ExpressionPtr>   mathoperation
 
 %type <int>             move
 %type <directions>      rotate
@@ -120,15 +122,15 @@ start:
 
 mathoperation:
     mathlitteral PLUS mathlitteral {
-        $$ = $1 + $3;
+        $$ = std::make_shared<ExpressionBinaire>($1, $3, OperateurBinaire::plus);
     } |
 
     mathlitteral MULTIPLY mathlitteral {
-        $$ = $1 * $3;
+        $$ = std::make_shared<ExpressionBinaire>($1, $3, OperateurBinaire::multiplie);
     } |
 
     mathlitteral MINUS mathlitteral {
-        $$ = $1 - $3;
+        $$ = std::make_shared<ExpressionBinaire>($1, $3, OperateurBinaire::moins);
     } |
 
     mathlitteral DIVIDE mathlitteral {
@@ -137,15 +139,19 @@ mathoperation:
             YYERROR;
         }
 
-        $$ = $1 / $3;
+        $$ = std::make_shared<ExpressionBinaire>($1, $3, OperateurBinaire::divise);
     }
 
 mathlitteral:
-    MINUS NUMBER %prec MINUS {
-        $$ = -$2;
+    MINUS mathlitteral %prec MINUS {
+        $$ = std::make_shared<ExpressionUnaire>($2, OperateurUnaire::neg);
     } |
 
-    NUMBER | mathoperation {
+    NUMBER {
+        $$ = std::make_shared<Constante>($1);
+    } |
+
+    mathoperation {
         $$ = $1;
     } |
 
@@ -155,11 +161,11 @@ mathlitteral:
 
 move:
     FORWARD mathlitteral {
-        $$ = $2;
+        $$ = $2->calculer(context);
     } |
 
     BACKWARD mathlitteral {
-        $$ = -$2;
+        $$ = -$2->calculer(context);
     }
 
 rotate:
