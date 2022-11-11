@@ -42,6 +42,30 @@ fin return token::END;
     return token::NL;
 }
 
+"+" {
+    return token::PLUS;
+}
+
+"-" {
+    return token::MINUS;
+}
+
+"/" {
+    return token::DIVIDE;
+}
+
+"*" {
+    return token::MULTIPLY;
+}
+
+"(" {
+    return token::EXPRESSION_START;
+}
+
+")" {
+    return token::EXPRESSION_END;
+}
+
 mur {
     return token::WALL;
 }
