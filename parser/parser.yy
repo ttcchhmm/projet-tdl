@@ -14,6 +14,7 @@
     #include "expressionUnaire.hh"
     #include "constante.hh"
     #include "variable.hh"
+    #include "directions.hh"
     
     class Scanner;
     class Driver;
@@ -101,6 +102,7 @@
 %type <int>             mathoperation
 
 %type <int>             move
+%type <directions>      rotate
 
 // --- PRECEDENCES --- //
 %precedence             MINUS
@@ -109,7 +111,7 @@
 
 start:
     instruction NL {
-
+        std::cout << "Parsed line." << std::endl;
     } start
     | END NL {
         QCoreApplication::instance()->quit();
@@ -159,6 +161,15 @@ move:
     BACKWARD mathlitteral {
         $$ = -$2;
     }
+
+rotate:
+    ROTATE LEFT {
+        $$ = directions::LEFT;
+    } |
+
+    ROTATE RIGHT {
+        $$ = directions::RIGHT;
+    }
     
 instruction:
     move {
@@ -175,7 +186,31 @@ instruction:
         } else if(orientation == 180) {
             driver.getJardin()->changePosition(0, x, y + $1);
         } else if(orientation == 270) {
-            driver.getJardin()->changePosition(0, x - $1, y);        }
+            driver.getJardin()->changePosition(0, x - $1, y);
+        }
+    } |
+
+    rotate {
+        float newOrientation = driver.getJardin()->orientation(0);
+        switch($1) {
+            case directions::LEFT: {
+                newOrientation -= 90;
+
+                if(newOrientation < 0) {
+                    newOrientation += 360;
+                }
+            }
+
+            case directions::RIGHT: {
+                newOrientation += 90;
+
+                if(newOrientation > 360) {
+                    newOrientation -= 360;
+                }
+            }
+        }
+
+        driver.getJardin()->changeOrientation(0, newOrientation);
     }
 %%
 
