@@ -105,6 +105,7 @@
 %type <int>             move
 %type <directions>      rotate
 %type <int>             target
+%type <int>             turtles
 
 // --- PRECEDENCES --- //
 %precedence             MINUS
@@ -182,6 +183,11 @@ move:
         $$ = -$2->calculer(context);
     }
 
+turtles:
+    TURTLES mathlitteral {
+        $$ = $2->calculer(context);
+    }
+
 rotate:
     ROTATE LEFT {
         $$ = directions::LEFT;
@@ -236,6 +242,17 @@ instruction:
 
         driver.getJardin()->changeOrientation($2, newOrientation);
     }
+    
+    /* turtles {
+        if(driver.getJardin()->getTortues().size() != 1) {
+            std::cerr << "Non default number of turtles already set." << std::endl;
+            YYERROR;
+        } else {
+            while(driver.getJardin()->getTortues().size() != $1) {
+                driver.getJardin()->newTortue(0, 0);
+            }
+        }
+    } */
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
