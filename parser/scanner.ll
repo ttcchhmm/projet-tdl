@@ -138,10 +138,6 @@ fonction {
     return token::BRANCH_START;
 }
 
-fin {
-    return token::BRANCH_END;
-}
-
 couleur {
     return token::COLOR;
 }

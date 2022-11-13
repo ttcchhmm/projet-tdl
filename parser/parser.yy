@@ -90,7 +90,6 @@
 %token                  BRANCH_START
 %token                  IF
 %token                  ELSE
-%token                  BRANCH_END
 
 // --- LOOPS --- //
 %token                  WHILE
