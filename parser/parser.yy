@@ -105,6 +105,7 @@
 
 %type <int>             move
 %type <directions>      rotate
+%type <int>             target
 
 // --- PRECEDENCES --- //
 %precedence             MINUS
@@ -159,6 +160,15 @@ mathlitteral:
         $$ = $2;
     }
 
+target:
+    TARGET {
+        $$ = $1 - 1;
+    } |
+
+    %empty {
+        $$ = 0;
+    }
+
 move:
     FORWARD mathlitteral {
         $$ = $2->calculer(context);
@@ -178,26 +188,26 @@ rotate:
     }
     
 instruction:
-    move {
-        float orientation = driver.getJardin()->orientation(0);
-        int x = driver.getJardin()->position(0).x();
-        int y = driver.getJardin()->position(0).y();
+    move target {
+        float orientation = driver.getJardin()->orientation($2);
+        int x = driver.getJardin()->position($2).x();
+        int y = driver.getJardin()->position($2).y();
 
         std::cout << orientation << " | " << x << "/" << y << std::endl;
 
         if(orientation == 0) {
-            driver.getJardin()->changePosition(0, x, y - $1);
+            driver.getJardin()->changePosition($2, x, y - $1);
         } else if(orientation == 90) {
-            driver.getJardin()->changePosition(0, x + $1, y);
+            driver.getJardin()->changePosition($2, x + $1, y);
         } else if(orientation == 180) {
-            driver.getJardin()->changePosition(0, x, y + $1);
+            driver.getJardin()->changePosition($2, x, y + $1);
         } else if(orientation == 270) {
-            driver.getJardin()->changePosition(0, x - $1, y);
+            driver.getJardin()->changePosition($2, x - $1, y);
         }
     } |
 
-    rotate {
-        float newOrientation = driver.getJardin()->orientation(0);
+    rotate target {
+        float newOrientation = driver.getJardin()->orientation($2);
         switch($1) {
             case directions::LEFT: {
                 newOrientation -= 90;
@@ -220,7 +230,7 @@ instruction:
             }
         }
 
-        driver.getJardin()->changeOrientation(0, newOrientation);
+        driver.getJardin()->changeOrientation($2, newOrientation);
     }
 %%
 
