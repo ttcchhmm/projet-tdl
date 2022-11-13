@@ -161,7 +161,12 @@ mathlitteral:
 
 target:
     TARGET {
-        $$ = $1 - 1;
+        if(driver.getJardin()->getTortues().size() >= $1) {
+            $$ = $1 - 1;
+        } else {
+            std::cerr << "Invalid turtle ID. Got " << $1 << " but there are " << driver.getJardin()->getTortues().size() << " turtle(s) on the field." << std::endl;
+            YYERROR;
+        }
     } |
 
     %empty {
