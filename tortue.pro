@@ -6,16 +6,16 @@ QMAKE_CXXFLAGS += -std=c++17
 TEMPLATE = app
 TARGET +=
 DEPENDPATH += $$PWD/build/expressions $$PWD/expressions
-INCLUDEPATH += $$PWD/build/expressions $$PWD/expressions $$PWD/parser $$PWD/GUI
+INCLUDEPATH += $$PWD/build/expressions $$PWD/expressions $$PWD/parser $$PWD/GUI $$PWD/instructions
 LIBS += -L$$PWD/build/expressions/ -lexpressions
 PRE_TARGETDEPS += $$PWD/build/expressions/libexpressions.a
 
 QT += widgets 
 # Input
-HEADERS += parser/scanner.hh parser/driver.hh GUI/tortue.hh GUI/jardinHandler.hh GUI/jardinRendering.hh GUI/jardin.hh parser/directions.hh
+HEADERS += parser/scanner.hh parser/driver.hh GUI/tortue.hh GUI/jardinHandler.hh GUI/jardinRendering.hh GUI/jardin.hh parser/directions.hh instructions/Instruction.hh
 #LEXSOURCES += parser/scanner.ll
 #YACCSOURCES += parser/parser.yy
-SOURCES += parser/main.cc parser/driver.cc GUI/tortue.cc GUI/jardinHandler.cc GUI/jardinRendering.cc GUI/jardin.cc 
+SOURCES += parser/main.cc parser/driver.cc GUI/tortue.cc GUI/jardinHandler.cc GUI/jardinRendering.cc GUI/jardin.cc
 
 
 #app.depends = ./parser/parser.hh
