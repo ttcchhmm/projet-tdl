@@ -241,18 +241,20 @@ instruction:
         }
 
         driver.getJardin()->changeOrientation($2, newOrientation);
-    }
+    } |
     
-    /* turtles {
-        if(driver.getJardin()->getTortues().size() != 1) {
+    turtles {
+        if(driver.getJardin()->nombreTortues() != 1) {
             std::cerr << "Non default number of turtles already set." << std::endl;
             YYERROR;
         } else {
-            while(driver.getJardin()->getTortues().size() != $1) {
-                driver.getJardin()->newTortue(0, 0);
+            while(driver.getJardin()->nombreTortues() != $1) {
+                driver.getJardin()->nouvelleTortue();
+
+                std::cout << "Generated turtle. Now " << driver.getJardin()->nombreTortues() << std::endl;
             }
         }
-    } */
+    }
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
