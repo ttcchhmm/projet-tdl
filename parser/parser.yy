@@ -14,8 +14,10 @@
     #include "expressionUnaire.hh"
     #include "constante.hh"
     #include "variable.hh"
-    #include "directions.hh"
-    
+    #include "directions.hh"   
+
+    #include "Forward.hh"
+
     class Scanner;
     class Driver;
 }
@@ -199,21 +201,24 @@ rotate:
     
 instruction:
     move target {
-        float orientation = driver.getJardin()->orientation($2);
-        int x = driver.getJardin()->position($2).x();
-        int y = driver.getJardin()->position($2).y();
+        Forward f;
+        f.execute(driver.getJardin(), $2, {$1});
 
-        std::cout << orientation << " | " << x << "/" << y << std::endl;
+        // float orientation = driver.getJardin()->orientation($2);
+        // int x = driver.getJardin()->position($2).x();
+        // int y = driver.getJardin()->position($2).y();
 
-        if(orientation == 0) {
-            driver.getJardin()->changePosition($2, x, y - $1);
-        } else if(orientation == 90) {
-            driver.getJardin()->changePosition($2, x + $1, y);
-        } else if(orientation == 180) {
-            driver.getJardin()->changePosition($2, x, y + $1);
-        } else if(orientation == 270) {
-            driver.getJardin()->changePosition($2, x - $1, y);
-        }
+        // std::cout << orientation << " | " << x << "/" << y << std::endl;
+
+        // if(orientation == 0) {
+        //     driver.getJardin()->changePosition($2, x, y - $1);
+        // } else if(orientation == 90) {
+        //     driver.getJardin()->changePosition($2, x + $1, y);
+        // } else if(orientation == 180) {
+        //     driver.getJardin()->changePosition($2, x, y + $1);
+        // } else if(orientation == 270) {
+        //     driver.getJardin()->changePosition($2, x - $1, y);
+        // }
     } |
 
     rotate target {
