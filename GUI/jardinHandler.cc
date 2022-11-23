@@ -44,7 +44,6 @@ void JardinHandler::run()
         mutex.lock();
 	
         parser->parse();
-
         mutex.unlock();
         emit parse();
 }

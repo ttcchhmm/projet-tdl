@@ -82,10 +82,19 @@ public:
     bool styloEstPose(int numeroTortue){return tortues.at(numeroTortue)->styloIsPose();}
     QSize tailleJardin(){return fenetre;};
     void changeTailleJardin(int w, int h);
+    void nouvelleTortue();
     bool estMur(int x, int y);
+    bool estVide(int x, int y);
+    int nombreTortues() {return tortues.size();}
+
+    void nettoyerJardin();
+    void ajouterMur(int x, int y);
+    void supprimerTortue(int numeroTortue);
+    void ajouterVide(int x, int y);
 
 signals:
     void newTortue(int x, int y);
+    void clearGarden();
     void sizeFenetre(int w, int h);
 
 private:

@@ -92,8 +92,44 @@ bool JardinRendering::estMur(int x, int y){
      return false;
 }
 
+bool JardinRendering::estVide(int x, int y){
+     for (unsigned int i=0; i<vides.size(); i++){
+         if ((vides.at(i).getX()==x) and (vides.at(i).getY()==y)) return true; 
+     }
+     return false;
+}
+
 void JardinRendering::changeTailleJardin(int w, int h){
      fenetre = QSize(w,h);
      emit sizeFenetre(w,h);
 }
 
+void JardinRendering::nettoyerJardin() {
+    for (unsigned int i=0; i<tortues.size(); i++)
+        delete tortues[i];
+    emit clearGarden();
+    tortues.clear();
+    murs.clear();
+    vides.clear();
+}
+
+void JardinRendering::ajouterMur(int x, int y){
+    murs.push_back(Mur(x,y));
+}
+
+void JardinRendering::ajouterVide(int x, int y){
+    vides.push_back(Vide(x,y));
+}
+
+void JardinRendering::supprimerTortue(int numeroTortue){
+    if (numeroTortue < tortues.size())
+        tortues.erase(tortues.begin()+numeroTortue);
+}
+
+void JardinRendering::nouvelleTortue() {
+    Tortue * T = new Tortue; 
+    T->setX(0);
+    T->setY(0);
+    tortues.push_back(T);
+    emit newTortue(0,0);
+}

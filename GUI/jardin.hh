@@ -24,7 +24,8 @@ class Jardin:public QWidget
         void updateJardin();
         void nouvelleTortue(int x, int y);
         void tailleFenetre(int w, int h);
-		
+        void nettoyerJardin();	
+        
     protected:
         void paintEvent(QPaintEvent *event) override;
 

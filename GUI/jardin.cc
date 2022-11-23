@@ -8,6 +8,7 @@ Jardin::Jardin(char const *file, QWidget * parent)
     connect(thread, SIGNAL(parse()), this, SLOT(updateJardin()));
     connect(render, SIGNAL(newTortue(int, int)), this, SLOT(nouvelleTortue(int, int)));
     connect(render, SIGNAL(sizeFenetre(int, int)), this, SLOT(tailleFenetre(int, int)));
+    connect(render, SIGNAL(clearGarden()), this, SLOT(nettoyerJardin()));
     render->construction(file);
     this->setFixedSize(render->tailleJardin().width()*35,render->tailleJardin().height()*35);
     mur = QPixmap("../GUI/IMG/mur.jpg");
@@ -22,6 +23,11 @@ Jardin::~Jardin(){
 
 void Jardin::nouvelleTortue(int x, int y){
     tortues.push_back(Tortue(x,y));
+}
+
+
+void Jardin::nettoyerJardin(){
+    tortues.clear();    
 }
 
 void Jardin::tailleFenetre(int w, int h){
@@ -117,5 +123,6 @@ void Jardin::updateJardin()
     }
     thread->parsingJardin();
 }
+
 
 
