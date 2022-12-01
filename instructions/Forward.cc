@@ -4,7 +4,7 @@ unsigned int Forward::numberOfArguments() const {
     return 1;
 }
 
-bool Forward::execute(JardinRendering* garden, unsigned int target, std::vector<int> args) {
+bool Forward::execute(JardinRendering* garden, std::size_t target, std::vector<int> args) {
     float orientation = garden->orientation(target);
     int x = garden->position(target).x();
     int y = garden->position(target).y();

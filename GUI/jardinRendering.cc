@@ -42,7 +42,7 @@ void JardinRendering::construction(char const *file){
     else {Tortue * T = new Tortue; T->setX(0);T->setY(0);tortues.push_back(T);emit newTortue(0,0);fenetre = QSize(20,15);}
 }
 
-void JardinRendering::changePosition(int numeroTortue, int x, int y){
+void JardinRendering::changePosition(std::size_t numeroTortue, int x, int y){
     tortues.at(numeroTortue)->setX(x);
     tortues.at(numeroTortue)->setY(y);
     EtatTortue E = EtatTortue(numeroTortue,*tortues.at(numeroTortue));
@@ -50,35 +50,35 @@ void JardinRendering::changePosition(int numeroTortue, int x, int y){
     mouvements.push(E);
 }
 
-void JardinRendering::changeOrientation(int numeroTortue, float o){
+void JardinRendering::changeOrientation(std::size_t numeroTortue, float o){
     tortues.at(numeroTortue)->setOrientation(o);
     EtatTortue E = EtatTortue(numeroTortue,*tortues.at(numeroTortue));
     E.setOrientation(o);
     mouvements.push(E);
 }
 
-void JardinRendering::changeCouleurCarapace(int numeroTortue, int r, int g, int b){
+void JardinRendering::changeCouleurCarapace(std::size_t numeroTortue, int r, int g, int b){
     tortues.at(numeroTortue)->setCouleurCarapace(QColor(r,g,b));
     EtatTortue E = EtatTortue(numeroTortue,*tortues.at(numeroTortue));
     E.setCouleurCarapace(QColor(r,g,b));
     mouvements.push(E);
 }
 
-void JardinRendering::changeCouleurMotif(int numeroTortue, int r, int g, int b){
+void JardinRendering::changeCouleurMotif(std::size_t numeroTortue, int r, int g, int b){
     tortues.at(numeroTortue)->setCouleurMotif(QColor(r,g,b));
     EtatTortue E = EtatTortue(numeroTortue,*tortues.at(numeroTortue));
     E.setCouleurMotif(QColor(r,g,b));
     mouvements.push(E);
 }
 
-void JardinRendering::poserStylo(int numeroTortue){
+void JardinRendering::poserStylo(std::size_t numeroTortue){
     tortues.at(numeroTortue)->poserStylo();
     EtatTortue E = EtatTortue(numeroTortue,*tortues.at(numeroTortue));
     E.setStyloPose(true);
     mouvements.push(E);
 }
 
-void JardinRendering::leverStylo(int numeroTortue){
+void JardinRendering::leverStylo(std::size_t numeroTortue){
     tortues.at(numeroTortue)->leverStylo();
     EtatTortue E = EtatTortue(numeroTortue,*tortues.at(numeroTortue));
     E.setStyloPose(false);

@@ -8,5 +8,5 @@
 class Forward : public Instruction<int> {
     public:
         unsigned int numberOfArguments() const override;
-        bool execute(JardinRendering* garden, unsigned int target, std::vector<int> args) override;
+        bool execute(JardinRendering* garden, std::size_t target, std::vector<int> args) override;
 };

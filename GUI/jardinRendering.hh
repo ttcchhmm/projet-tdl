@@ -30,7 +30,7 @@ class Vide{
 
 class EtatTortue{
     private:
-       unsigned int numeroTortue;
+       std::size_t numeroTortue;
        int posX;
        int posY;
        float orientation;
@@ -69,17 +69,17 @@ public:
     std::queue<EtatTortue> * getMouvements(){return &mouvements;}
     std::vector<Tortue *> getTortues(){return tortues;}
     
-    void changePosition(int numeroTortue, int x, int y);
-    void changeOrientation(int numeroTortue, float o);
-    void changeCouleurCarapace(int numeroTortue, int r, int g, int b);
-    void changeCouleurMotif(int numeroTortue, int r, int g, int b);
-    void poserStylo(int numeroTortue);
-    void leverStylo(int numeroTortue);
-    QPoint position(int numeroTortue){return QPoint(tortues.at(numeroTortue)->getX(),tortues.at(numeroTortue)->getY());}
-    float orientation(int numeroTortue){return tortues.at(numeroTortue)->getOrientation();}
-    QColor couleurCarapace(int numeroTortue){return tortues.at(numeroTortue)->getCouleurCarapace();}
-    QColor couleurMotif(int numeroTortue){return tortues.at(numeroTortue)->getCouleurMotif();}
-    bool styloEstPose(int numeroTortue){return tortues.at(numeroTortue)->styloIsPose();}
+    void changePosition(std::size_t numeroTortue, int x, int y);
+    void changeOrientation(std::size_t numeroTortue, float o);
+    void changeCouleurCarapace(std::size_t numeroTortue, int r, int g, int b);
+    void changeCouleurMotif(std::size_t numeroTortue, int r, int g, int b);
+    void poserStylo(std::size_t numeroTortue);
+    void leverStylo(std::size_t numeroTortue);
+    QPoint position(std::size_t numeroTortue){return QPoint(tortues.at(numeroTortue)->getX(),tortues.at(numeroTortue)->getY());}
+    float orientation(std::size_t numeroTortue){return tortues.at(numeroTortue)->getOrientation();}
+    QColor couleurCarapace(std::size_t numeroTortue){return tortues.at(numeroTortue)->getCouleurCarapace();}
+    QColor couleurMotif(std::size_t numeroTortue){return tortues.at(numeroTortue)->getCouleurMotif();}
+    bool styloEstPose(std::size_t numeroTortue){return tortues.at(numeroTortue)->styloIsPose();}
     QSize tailleJardin(){return fenetre;};
     void changeTailleJardin(int w, int h);
     void nouvelleTortue();

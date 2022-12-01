@@ -18,7 +18,7 @@ class Instruction {
          * @param args The arguments needed to run the instruction. No bounds verification will be made, so check before calling !
          * @return True if the instruction succeeded, false otherwise.
          */
-        virtual bool execute(JardinRendering* garden, unsigned int target, std::vector<ArgumentType> args) = 0;
+        virtual bool execute(JardinRendering* garden, std::size_t target, std::vector<ArgumentType> args) = 0;
 
         /**
          * @brief Get the required number of arguments.
