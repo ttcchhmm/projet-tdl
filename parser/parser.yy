@@ -101,8 +101,7 @@
 %token                  FUNCTION_START
 
 // --- TYPES --- //
-%type <ExpressionPtr>   mathlitteral
-%type <ExpressionPtr>   mathoperation
+%type <ExpressionPtr>   math
 
 %type <int>             move
 %type <directions>      rotate
@@ -110,7 +109,9 @@
 %type <int>             turtles
 
 // --- PRECEDENCES --- //
-%precedence             MINUS
+%left                   PLUS        MINUS
+%left                   MULTIPLY    DIVIDE
+%precedence             NEGATIVE
 
 %%
 
@@ -122,43 +123,34 @@ start:
         YYACCEPT;
     }
 
-mathoperation:
-    mathlitteral PLUS mathlitteral {
+math:
+    NUMBER {
+        $$ = std::make_shared<Constante>($1);
+    } |
+
+    math PLUS math {
         $$ = std::make_shared<ExpressionBinaire>($1, $3, OperateurBinaire::plus);
     } |
 
-    mathlitteral MULTIPLY mathlitteral {
+    math MULTIPLY math {
         $$ = std::make_shared<ExpressionBinaire>($1, $3, OperateurBinaire::multiplie);
     } |
 
-    mathlitteral MINUS mathlitteral {
+    math MINUS math {
         $$ = std::make_shared<ExpressionBinaire>($1, $3, OperateurBinaire::moins);
     } |
 
-    mathlitteral DIVIDE mathlitteral {
+    math DIVIDE math {
         if($3 == 0) {
             std::cerr << "Division by zero." << std::endl;
             YYERROR;
         }
 
         $$ = std::make_shared<ExpressionBinaire>($1, $3, OperateurBinaire::divise);
-    }
+    } |
 
-mathlitteral:
-    MINUS mathlitteral %prec MINUS {
+    MINUS math %prec NEGATIVE {
         $$ = std::make_shared<ExpressionUnaire>($2, OperateurUnaire::neg);
-    } |
-
-    NUMBER {
-        $$ = std::make_shared<Constante>($1);
-    } |
-
-    mathoperation {
-        $$ = $1;
-    } |
-
-    EXPRESSION_START mathoperation EXPRESSION_END {
-        $$ = $2;
     }
 
 target:
@@ -176,16 +168,16 @@ target:
     }
 
 move:
-    FORWARD mathlitteral {
+    FORWARD math {
         $$ = $2->calculer(context);
     } |
 
-    BACKWARD mathlitteral {
+    BACKWARD math {
         $$ = -$2->calculer(context);
     }
 
 turtles:
-    TURTLES mathlitteral {
+    TURTLES math {
         $$ = $2->calculer(context);
     }
 
