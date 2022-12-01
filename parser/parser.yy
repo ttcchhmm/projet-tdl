@@ -119,7 +119,6 @@ start:
         std::cout << "Parsed line." << std::endl;
     } start
     | END NL {
-        QCoreApplication::instance()->quit();
         YYACCEPT;
     }
 
