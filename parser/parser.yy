@@ -149,6 +149,10 @@ math:
         $$ = std::make_shared<ExpressionBinaire>($1, $3, OperateurBinaire::divise);
     } |
 
+    EXPRESSION_START math EXPRESSION_END {
+        $$ = $2;
+    } |
+
     MINUS math %prec NEGATIVE {
         $$ = std::make_shared<ExpressionUnaire>($2, OperateurUnaire::neg);
     }
