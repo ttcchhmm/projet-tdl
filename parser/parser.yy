@@ -17,6 +17,7 @@
     #include "directions.hh"   
 
     #include "Forward.hh"
+    #include "Rotate.hh"
 
     class Scanner;
     class Driver;
@@ -201,30 +202,8 @@ instruction:
     } |
 
     rotate target {
-        float newOrientation = driver.getJardin()->orientation($2);
-        switch($1) {
-            case directions::LEFT: {
-                newOrientation -= 90;
-
-                if(newOrientation < 0) {
-                    newOrientation += 360;
-                }
-
-                break;
-            }
-
-            case directions::RIGHT: {
-                newOrientation += 90;
-
-                if(newOrientation > 360) {
-                    newOrientation -= 360;
-                }
-
-                break;
-            }
-        }
-
-        driver.getJardin()->changeOrientation($2, newOrientation);
+        Rotate r;
+        r.execute(driver.getJardin(), $2, {$1});
     } |
     
     turtles {
