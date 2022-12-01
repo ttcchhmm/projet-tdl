@@ -3,6 +3,9 @@
 #include "Instruction.hh"
 #include "directions.hh"
 
+/**
+ * @brief An instruction that rotates a turtle.
+ */
 class Rotate : public Instruction<directions> {
     public:
         unsigned int numberOfArguments() const override;

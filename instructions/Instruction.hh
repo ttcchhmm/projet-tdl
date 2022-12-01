@@ -3,6 +3,11 @@
 #include <vector>
 #include "jardinRendering.hh"
 
+/**
+ * @brief The type of the arguments required by the instruction.
+ *
+ * @tparam ArgumentType The arguments type.
+ */
 template <typename ArgumentType>
 
 /**
