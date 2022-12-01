@@ -85,11 +85,11 @@ public:
     void nouvelleTortue();
     bool estMur(int x, int y);
     bool estVide(int x, int y);
-    int nombreTortues() {return tortues.size();}
+    std::size_t nombreTortues() {return tortues.size();}
 
     void nettoyerJardin();
     void ajouterMur(int x, int y);
-    void supprimerTortue(int numeroTortue);
+    void supprimerTortue(std::size_t numeroTortue);
     void ajouterVide(int x, int y);
 
 signals:

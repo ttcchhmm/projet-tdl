@@ -155,7 +155,7 @@ jardin {
 }
 
 @[0-9]+ {
-    yylval->build<int>(std::atoi(yytext+1));
+    yylval->build<std::size_t>(std::atoi(yytext+1));
     return token::TARGET;
 }
 

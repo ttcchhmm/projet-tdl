@@ -45,7 +45,7 @@
 %token                  END
 %token <int>            NUMBER
 %token <std::string>    IDENTIFIER
-%token <int>            TARGET
+%token <std::size_t>    TARGET
 %token <std::string>    COLOR
 %token <std::string>    STRING
 
@@ -106,7 +106,7 @@
 %type <int>             move
 %type <directions>      rotate
 %type <int>             target
-%type <int>             turtles
+%type <std::size_t>     turtles
 
 // --- PRECEDENCES --- //
 %left                   PLUS        MINUS

@@ -121,7 +121,7 @@ void JardinRendering::ajouterVide(int x, int y){
     vides.push_back(Vide(x,y));
 }
 
-void JardinRendering::supprimerTortue(int numeroTortue){
+void JardinRendering::supprimerTortue(std::size_t numeroTortue){
     if (numeroTortue < tortues.size())
         tortues.erase(tortues.begin()+numeroTortue);
 }
