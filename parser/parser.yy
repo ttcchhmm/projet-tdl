@@ -197,13 +197,13 @@ rotate:
     
 instruction:
     move target {
-        Forward f;
-        f.execute(driver.getJardin(), $2, {$1});
+        Forward f($2, $1);
+        f.execute(driver.getJardin());
     } |
 
     rotate target {
-        Rotate r;
-        r.execute(driver.getJardin(), $2, {$1});
+        Rotate r($2, $1);
+        r.execute(driver.getJardin());
     } |
     
     turtles {

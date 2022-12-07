@@ -1,24 +1,22 @@
 #include "Forward.hh"
 
-unsigned int Forward::numberOfArguments() const {
-    return 1;
-}
+Forward::Forward(std::size_t turtle, int amount): Instruction(turtle), _amount(amount) {}
 
-bool Forward::execute(JardinRendering* const & garden, std::size_t const & target, std::vector<int> const & args) {
-    float orientation = garden->orientation(target);
-    int x = garden->position(target).x();
-    int y = garden->position(target).y();
+bool Forward::execute(JardinRendering* const & garden) {
+    float orientation = garden->orientation(getTarget());
+    int x = garden->position(getTarget()).x();
+    int y = garden->position(getTarget()).y();
 
     std::cout << orientation << " | " << x << "/" << y << std::endl;
 
     if(orientation == 0) {
-        garden->changePosition(target, x, y - args[0]);
+        garden->changePosition(getTarget(), x, y - _amount);
     } else if(orientation == 90) {
-        garden->changePosition(target, x + args[0], y);
+        garden->changePosition(getTarget(), x + _amount, y);
     } else if(orientation == 180) {
-        garden->changePosition(target, x, y + args[0]);
+        garden->changePosition(getTarget(), x, y + _amount);
     } else if(orientation == 270) {
-        garden->changePosition(target, x - args[0], y);
+        garden->changePosition(getTarget(), x - _amount, y);
     }
 
     return true;

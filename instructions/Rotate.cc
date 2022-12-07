@@ -1,12 +1,10 @@
 #include "Rotate.hh"
 
-unsigned int Rotate::numberOfArguments() const {
-    return 1;
-}
+Rotate::Rotate(std::size_t turtle, directions dir): Instruction(turtle), _dir(dir) {}
 
-bool Rotate::execute(JardinRendering* const & garden, std::size_t const & target, std::vector<directions> const & args) {
-    float newOrientation = garden->orientation(target);
-    switch(args[0]) {
+bool Rotate::execute(JardinRendering* const & garden) {
+    float newOrientation = garden->orientation(getTarget());
+    switch(_dir) {
         case directions::LEFT: {
             newOrientation -= 90;
 
@@ -28,7 +26,7 @@ bool Rotate::execute(JardinRendering* const & garden, std::size_t const & target
         }
     }
 
-    garden->changeOrientation(target, newOrientation);
+    garden->changeOrientation(getTarget(), newOrientation);
     
     return true;
 }
