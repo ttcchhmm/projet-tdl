@@ -8,7 +8,7 @@
 
 class Function {
     private:
-        std::list<std::unique_ptr<Instruction>> _instructions;
+        std::list<std::shared_ptr<Instruction>> _instructions;
 
     public:
         Function() = default;
@@ -20,7 +20,7 @@ class Function {
          *
          * @param instruction The Instruction to add. 
          */
-        void addInstruction(std::unique_ptr<Instruction> const & instruction);
+        void addInstruction(std::shared_ptr<Instruction> const & instruction);
 
         /**
          * @brief Execute the Function.
