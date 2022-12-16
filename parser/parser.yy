@@ -18,6 +18,7 @@
 
     #include "Forward.hh"
     #include "Rotate.hh"
+    #include "Turtles.hh"
 
     class Scanner;
     class Driver;
@@ -104,10 +105,11 @@
 // --- TYPES --- //
 %type <ExpressionPtr>   math
 
-%type <int>             move
-%type <directions>      rotate
-%type <int>             target
-%type <std::size_t>     turtles
+%type <int>                             move
+%type <directions>                      rotate
+%type <int>                             target
+%type <std::size_t>                     turtles
+%type <std::shared_ptr<Instruction>>    instruction
 
 // --- PRECEDENCES --- //
 %left                   PLUS        MINUS
@@ -119,6 +121,7 @@
 start:
     instruction NL {
         std::cout << "Parsed line." << std::endl;
+        $1->execute(driver.getJardin());
     } start
     | END NL {
         YYACCEPT;
@@ -197,26 +200,15 @@ rotate:
     
 instruction:
     move target {
-        Forward f($2, $1);
-        f.execute(driver.getJardin());
+        $$ = std::shared_ptr<Instruction>(new Forward($2, $1));
     } |
 
     rotate target {
-        Rotate r($2, $1);
-        r.execute(driver.getJardin());
+        $$ = std::shared_ptr<Instruction>(new Rotate($2, $1));
     } |
     
     turtles {
-        if(driver.getJardin()->nombreTortues() != 1) {
-            std::cerr << "Non default number of turtles already set." << std::endl;
-            YYERROR;
-        } else {
-            while(driver.getJardin()->nombreTortues() != $1) {
-                driver.getJardin()->nouvelleTortue();
-
-                std::cout << "Generated turtle. Now " << driver.getJardin()->nombreTortues() << std::endl;
-            }
-        }
+        $$ = std::shared_ptr<Instruction>(new Turtles($1));
     }
 %%
 
