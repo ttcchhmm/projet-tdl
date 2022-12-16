@@ -1,17 +1,15 @@
 #include "Function.hh"
 
-Function::Function(std::string const & name): _name(name) {}
-
-void Function::addInstruction(Instruction const & instruction) {
-    _instructions.push_back(instruction);
+void Function::addInstruction(std::unique_ptr<Instruction> const & instruction) {
+    _instructions.push_back(std::move(instruction));
 }
 
-void Function::execute(JardinRendering* const & garden) const {
+bool Function::execute(JardinRendering* const & garden) const {
     for(auto & instruction : _instructions) {
-        instruction.execute(garden);
+        if(!instruction->execute(garden)) {
+            return false;
+        }
     }
-}
 
-std::string Function::getName() const {
-    return _name;
-} 
+    return true;
+}

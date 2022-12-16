@@ -4,15 +4,15 @@
 
 #include <list>
 #include <string>
+#include <memory>
 
 class Function {
     private:
-        std::string _name;
-        std::list<Instruction> _instructions;
+        std::list<std::unique_ptr<Instruction>> _instructions;
 
     public:
-        Function(std::string const & name);
-        Function(Function const &) = default;
+        Function() = default;
+        Function(Function const &) = delete;
         ~Function() = default;
 
         /**
@@ -20,14 +20,13 @@ class Function {
          *
          * @param instruction The Instruction to add. 
          */
-        void addInstruction(Instruction const & instruction);
+        void addInstruction(std::unique_ptr<Instruction> const & instruction);
 
         /**
          * @brief Execute the Function.
          * 
          * @param garden The garden to use as context.
+         * @return 
          */
-        void execute(JardinRendering* const & garden) const;
-
-        [[nodiscard]] std::string getName() const;
+        bool execute(JardinRendering* const & garden) const;
 };
