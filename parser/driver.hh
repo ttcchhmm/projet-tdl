@@ -10,12 +10,11 @@
 #include "jardinRendering.hh"
 
 class JardinHandler;
-// class JardinRendering;
 
 class Driver {
 private:      
     JardinHandler * monJardin;
-    Contexte variables;       
+    Contexte variables;
 
 public:
     Driver(JardinHandler * J);
@@ -24,13 +23,6 @@ public:
     double  getVariable(const std::string& name) const;
     void    setVariable(const std::string& name, double value);
     JardinRendering* getJardin();
-/* EXEMPLE
-    void    Driver::changerPositionTortue0(int x, int y);
-    float    obtenirOrientationTortue1();
-*/ 
-
 };
 
 #endif
-
-
