@@ -26,7 +26,7 @@ using token = yy::Parser::token;
     yylval = lval;
 %}
 
--- {
+--.* {
     return token::COMMENT;
 }
 

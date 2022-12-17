@@ -215,7 +215,7 @@ instruction:
     }
 
 function:
-    FUNCTION IDENTIFIER BRANCH_START NL functionBody {
+    FUNCTION IDENTIFIER BRANCH_START comment NL functionBody {
         std::cout << "Parsed function " << $2 << std::endl;
 
         if(!driver.addFunction($2)) {
@@ -225,10 +225,14 @@ function:
     }
 
 functionBody:
-    instruction NL {
+    instruction comment NL {
         driver.enqueueInstruction($1);
     } functionBody |
-    END FUNCTION {}
+    comment NL {} functionBody |
+    END FUNCTION comment {}
+
+comment:
+    COMMENT | %empty {}
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
