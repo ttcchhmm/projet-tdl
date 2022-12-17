@@ -131,10 +131,10 @@ repete {
 }
 
 fonction {
-    return token::FUNCTION_START;
+    return token::FUNCTION;
 }
 
-: {
+" :" {
     return token::BRANCH_START;
 }
 

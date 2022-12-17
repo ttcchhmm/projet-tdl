@@ -100,7 +100,7 @@
 %token                  REPEAT
 
 // --- FUNCTIONS --- //
-%token                  FUNCTION_START
+%token                  FUNCTION
 
 // --- TYPES --- //
 %type <ExpressionPtr>   math
@@ -119,11 +119,14 @@
 %%
 
 start:
-    instruction NL {
-        std::cout << "Parsed line." << std::endl;
-        $1->execute(driver.getJardin());
-    } start
-    | END NL {
+    function NL {}
+    start
+    | NL {
+        if(!driver.runMain()) {
+            std::cout << "No main function was found." << std::endl;
+            YYERROR;
+        }
+
         YYACCEPT;
     }
 
@@ -210,6 +213,22 @@ instruction:
     turtles {
         $$ = std::shared_ptr<Instruction>(new Turtles($1));
     }
+
+function:
+    FUNCTION IDENTIFIER BRANCH_START NL functionBody {
+        std::cout << "Parsed function " << $2 << std::endl;
+
+        if(!driver.addFunction($2)) {
+            std::cerr << "Invalid function name. Maybe it's a redeclaration ?" << std::endl;
+            YYERROR;
+        }
+    }
+
+functionBody:
+    instruction NL {
+        driver.enqueueInstruction($1);
+    } functionBody |
+    END FUNCTION {}
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
