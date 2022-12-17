@@ -179,12 +179,20 @@ target:
     }
 
 move:
-    FORWARD math {
+    FORWARD math times {
         $$ = $2->calculer(context);
     } |
 
-    BACKWARD math {
+    BACKWARD math times {
         $$ = -$2->calculer(context);
+    } |
+    
+    FORWARD {
+        $$ = 1;
+    } |
+
+    BACKWARD {
+        $$ = -1;
     }
 
 turtles:
@@ -233,6 +241,9 @@ functionBody:
 
 comment:
     COMMENT | %empty {}
+
+times:
+    TIMES | %empty {}
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
