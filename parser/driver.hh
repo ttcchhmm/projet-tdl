@@ -8,6 +8,7 @@
 #include <QSize>
 #include "contexte.hh"
 #include "jardinRendering.hh"
+#include "Function.hh"
 
 class JardinHandler;
 
@@ -16,6 +17,16 @@ private:
     JardinHandler * monJardin;
     Contexte variables;
 
+    /**
+     * @brief Contains the functions. The key is the function's name and the value is a Function instance.
+     */
+    std::map<std::string, std::shared_ptr<Function>> functions;
+
+    /**
+     * @brief Queued instructions waiting to be added to a function.
+     */
+    std::list<std::shared_ptr<Instruction>> instructionBuffer;
+
 public:
     Driver(JardinHandler * J);
     ~Driver();
@@ -23,6 +34,27 @@ public:
     double  getVariable(const std::string& name) const;
     void    setVariable(const std::string& name, double value);
     JardinRendering* getJardin();
+
+    /**
+     * @brief Add the enqueued instructions to a function.
+     * 
+     * @return True if the function was added, false if it's a redefinition or if the name is empty.
+     */
+    bool addFunction(std::string const & name);
+
+    /**
+     * @brief Add an instruction to the instruction queue.
+     * 
+     * @param instruction A pointer to the instruction to add.
+     */
+    void enqueueInstruction(std::shared_ptr<Instruction> instruction);
+
+    /**
+     * @brief Run the main function.
+     * 
+     * @return True if a main function was found and executed, false otherwise.
+     */
+    bool runMain();
 };
 
 #endif

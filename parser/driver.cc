@@ -25,3 +25,34 @@ void Driver::setVariable(const std::string & name, double value) {
 JardinRendering * Driver::getJardin() {
     return monJardin->getJardinRendering();
 }
+
+bool Driver::addFunction(std::string const & name) {
+    if(functions.find(name) != functions.end()) { // Already exists.
+        return false;
+    }
+
+    functions[name] = std::make_shared<Function>();
+
+    // Move queued instructions inside the Function.
+    for(auto & i : instructionBuffer) {
+        functions[name]->addInstruction(i);
+    }
+
+    // Clear the queue.
+    instructionBuffer.clear();
+
+    return true;
+}
+
+void Driver::enqueueInstruction(std::shared_ptr<Instruction> instruction) {
+    instructionBuffer.push_back(instruction);
+}
+
+bool Driver::runMain() {
+    if(functions.find("main") == functions.end()) { // Not found
+        return false;
+    } else {
+        functions.at("main")->execute(getJardin());
+        return true;
+    }
+}
