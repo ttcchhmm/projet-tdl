@@ -12,10 +12,10 @@ PRE_TARGETDEPS += $$PWD/build/expressions/libexpressions.a
 
 QT += widgets 
 # Input
-HEADERS += parser/scanner.hh parser/driver.hh GUI/tortue.hh GUI/jardinHandler.hh GUI/jardinRendering.hh GUI/jardin.hh parser/directions.hh instructions/Instruction.hh instructions/Forward.hh instructions/Rotate.hh instructions/Turtles.hh instructions/Function.hh
+HEADERS += parser/scanner.hh parser/driver.hh GUI/tortue.hh GUI/jardinHandler.hh GUI/jardinRendering.hh GUI/jardin.hh parser/directions.hh instructions/Instruction.hh instructions/Forward.hh instructions/Rotate.hh instructions/Turtles.hh instructions/Function.hh instructions/FunctionCall.hh
 #LEXSOURCES += parser/scanner.ll
 #YACCSOURCES += parser/parser.yy
-SOURCES += parser/main.cc parser/driver.cc GUI/tortue.cc GUI/jardinHandler.cc GUI/jardinRendering.cc GUI/jardin.cc instructions/Forward.cc instructions/Rotate.cc instructions/Turtles.cc instructions/Function.cc
+SOURCES += parser/main.cc parser/driver.cc GUI/tortue.cc GUI/jardinHandler.cc GUI/jardinRendering.cc GUI/jardin.cc instructions/Forward.cc instructions/Rotate.cc instructions/Turtles.cc instructions/Function.cc instructions/FunctionCall.cc
 
 
 #app.depends = ./parser/parser.hh
