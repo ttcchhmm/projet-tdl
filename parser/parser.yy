@@ -257,5 +257,6 @@ times:
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
-    std::cerr << "Erreur : " << l << ", " << err_msg << std::endl;
+    /* std::cerr << "Erreur : " << l << ", " << err_msg << std::endl; */
+    std::cerr << "Error at " << l << " : " << err_msg << '.' << std::endl;
 }
