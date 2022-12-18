@@ -56,3 +56,7 @@ bool Driver::runMain() {
         return true;
     }
 }
+
+std::shared_ptr<Function>& Driver::getFunction(std::string const & name) {
+    return functions.at(name);
+}

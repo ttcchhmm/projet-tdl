@@ -55,6 +55,15 @@ public:
      * @return True if a main function was found and executed, false otherwise.
      */
     bool runMain();
+
+    /**
+     * @brief Get a function by its name.
+     * 
+     * @param name The function's name.
+     * @return A pointer to the function.
+     * @throw std::out_of_range if the function is undefined.
+     */
+    std::shared_ptr<Function>& getFunction(std::string const & name);
 };
 
 #endif
