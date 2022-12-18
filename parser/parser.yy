@@ -19,6 +19,7 @@
     #include "Forward.hh"
     #include "Rotate.hh"
     #include "Turtles.hh"
+    #include "FunctionCall.hh"
 
     class Scanner;
     class Driver;
@@ -220,6 +221,15 @@ instruction:
     
     turtles {
         $$ = std::shared_ptr<Instruction>(new Turtles($1));
+    } |
+
+    IDENTIFIER {
+        try {
+            $$ = std::shared_ptr<Instruction>(new FunctionCall(driver.getFunction($1), {}));
+        } catch (std::out_of_range const & e) {
+            std::cerr << "Undefined function: " << $1 << std::endl;
+            YYERROR;
+        }
     }
 
 function:
