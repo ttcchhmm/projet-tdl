@@ -11,7 +11,7 @@
 class FunctionCall: public Instruction {
     private:
         std::shared_ptr<Function> _function;
-        std::vector<int> _args;
+        std::shared_ptr<std::vector<double>> _args;
 
     public:
         /**
@@ -20,7 +20,7 @@ class FunctionCall: public Instruction {
          * @param function The function to call.
          * @param args The arguments.
          */
-        FunctionCall(std::shared_ptr<Function> function, std::vector<int> const & args);
+        FunctionCall(std::shared_ptr<Function> function, std::shared_ptr<std::vector<double>> const & args);
         FunctionCall(FunctionCall const &) = default;
         ~FunctionCall() override = default;
 
