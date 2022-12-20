@@ -16,10 +16,14 @@
     #include "variable.hh"
     #include "directions.hh"   
 
-    #include "Forward.hh"
-    #include "Rotate.hh"
-    #include "Turtles.hh"
-    #include "FunctionCall.hh"
+    #include "../instructions/Forward.hh"
+    #include "../instructions/Rotate.hh"
+    #include "../instructions/Turtles.hh"
+    #include "../instructions/FunctionCall.hh"
+    #include "../instructions/conditionnals/Not.hh"
+    #include "../instructions/conditionnals/If.hh"
+    #include "../instructions/conditionnals/Empty.hh"
+    #include "../instructions/conditionnals/Wall.hh"
 
     class Scanner;
     class Driver;
@@ -111,7 +115,12 @@
 %type <int>                                                         target
 %type <std::size_t>                                                 turtles
 %type <std::shared_ptr<Instruction>>                                instruction
+%type <std::shared_ptr<Instruction>>                                branch
 %type <std::shared_ptr<std::list<std::shared_ptr<Instruction>>>>    instructionList
+%type <std::shared_ptr<Instruction>>                                condInstruc
+%type <std::shared_ptr<Instruction>>                                conditionnal
+%type <bool>                                                        not
+%type <CheckDirection>                                              condDirection 
 
 // --- PRECEDENCES --- //
 %left                   PLUS        MINUS
@@ -231,6 +240,59 @@ instruction:
             std::cerr << "Undefined function: " << $1 << std::endl;
             YYERROR;
         }
+    } |
+
+    branch {
+        $$ = $1;
+    }
+
+condDirection:
+    FRONT {
+        $$ = CheckDirection::FRONT;
+    } |
+
+    BACK {
+        $$ = CheckDirection::BACK;
+    } |
+
+    LEFT {
+        $$ = CheckDirection::LEFT;
+    } |
+
+    RIGHT {
+        $$ = CheckDirection::RIGHT;
+    }
+
+condInstruc:
+    WALL condDirection target {
+        $$ = std::shared_ptr<Instruction>(new Wall($3, $2));
+    } |
+
+    EMPTY condDirection target {
+        $$ = std::shared_ptr<Instruction>(new Empty($3, $2));
+    }
+
+not:
+    %empty {
+        $$ = false;
+    } |
+
+    NOT {
+        $$ = true;
+    }
+
+conditionnal:
+    not condInstruc {
+        if($1) {
+            $$ = std::shared_ptr<Instruction>(new Not($2));
+        } else {
+            $$ = $2;
+        }
+    }
+
+branch:
+    IF conditionnal BRANCH_START comment NL instructionList END IF {
+        $$ = std::make_shared<If>($2, *$6);
     }
 
 function:
