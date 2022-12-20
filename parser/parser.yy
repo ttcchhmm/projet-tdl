@@ -23,6 +23,7 @@
     #include "../instructions/conditionnals/Not.hh"
     #include "../instructions/conditionnals/If.hh"
     #include "../instructions/conditionnals/Repeat.hh"
+    #include "../instructions/conditionnals/While.hh"
     #include "../instructions/conditionnals/Empty.hh"
     #include "../instructions/conditionnals/Wall.hh"
 
@@ -298,6 +299,10 @@ branch:
 
     REPEAT math BRANCH_START comment NL instructionList END REPEAT {
         $$ = std::make_shared<Repeat>($2->calculer(context), *$6);
+    } |
+
+    WHILE conditionnal BRANCH_START comment NL instructionList END WHILE {
+        $$ = std::make_shared<While>($2, *$6);
     }
 
 function:
