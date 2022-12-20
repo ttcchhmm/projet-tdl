@@ -31,8 +31,6 @@
 %code{
     #include <iostream>
     #include <string>
-    #include <list>
-    #include <vector>
 
     #include <QCoreApplication>
     
@@ -108,12 +106,11 @@
 // --- TYPES --- //
 %type <ExpressionPtr>   math
 
-%type <int>                                     move
-%type <directions>                              rotate
-%type <int>                                     target
-%type <std::size_t>                             turtles
-%type <std::shared_ptr<Instruction>>            instruction
-%type <std::shared_ptr<std::list<double>>>    arguments
+%type <int>                             move
+%type <directions>                      rotate
+%type <int>                             target
+%type <std::size_t>                     turtles
+%type <std::shared_ptr<Instruction>>    instruction
 
 // --- PRECEDENCES --- //
 %left                   PLUS        MINUS
@@ -212,17 +209,6 @@ rotate:
     ROTATE RIGHT {
         $$ = directions::RIGHT;
     }
-
-arguments:
-    %empty {
-        $$ = std::make_shared<std::list<double>>();
-    } |
-
-    math arguments {
-        $2->push_front($1->calculer(context));
-
-        $$ = $2;
-    }
     
 instruction:
     move target {
@@ -237,16 +223,9 @@ instruction:
         $$ = std::shared_ptr<Instruction>(new Turtles($1));
     } |
 
-    IDENTIFIER arguments {
-        auto args(std::make_shared<std::vector<double>>());
-
-        args->reserve($2->size());
-        for(auto const & arg : *$2.get()) {
-            args->push_back(arg);
-        }
-
+    IDENTIFIER {
         try {
-            $$ = std::shared_ptr<Instruction>(new FunctionCall(driver.getFunction($1), args));
+            $$ = std::shared_ptr<Instruction>(new FunctionCall(driver.getFunction($1), {}));
         } catch (std::out_of_range const & e) {
             std::cerr << "Undefined function: " << $1 << std::endl;
             YYERROR;
