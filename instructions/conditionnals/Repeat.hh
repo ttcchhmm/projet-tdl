@@ -1,0 +1,31 @@
+#pragma once
+
+#include "../Instruction.hh"
+
+/**
+ * @brief The 'repeat' loop.
+ */
+class Repeat: public Instruction {
+    private:
+        /**
+         * @brief The amount of times the loop will be repeated.
+         */
+        unsigned int _amount;
+
+        /**
+         * @brief The instructions to run.
+         */
+        std::list<std::shared_ptr<Instruction>> _instructions;
+
+    public:
+        /**
+         * @brief Construct a new repeat instruction.
+         * @param amount The amount of times the instructions will be looped.
+         * @param instructions The instructions to loop.
+         */
+        Repeat(unsigned int amount, std::list<std::shared_ptr<Instruction>> instructions);
+        Repeat(Repeat const &) = default;
+        ~Repeat() = default;
+
+        bool execute(JardinRendering* const & garden) override;
+};
