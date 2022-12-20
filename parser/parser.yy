@@ -106,11 +106,12 @@
 // --- TYPES --- //
 %type <ExpressionPtr>   math
 
-%type <int>                             move
-%type <directions>                      rotate
-%type <int>                             target
-%type <std::size_t>                     turtles
-%type <std::shared_ptr<Instruction>>    instruction
+%type <int>                                                         move
+%type <directions>                                                  rotate
+%type <int>                                                         target
+%type <std::size_t>                                                 turtles
+%type <std::shared_ptr<Instruction>>                                instruction
+%type <std::shared_ptr<std::list<std::shared_ptr<Instruction>>>>    instructionList
 
 // --- PRECEDENCES --- //
 %left                   PLUS        MINUS
@@ -233,21 +234,24 @@ instruction:
     }
 
 function:
-    FUNCTION IDENTIFIER BRANCH_START comment NL functionBody {
+    FUNCTION IDENTIFIER BRANCH_START comment NL instructionList END FUNCTION comment {
         std::cout << "Parsed function " << $2 << std::endl;
 
-        if(!driver.addFunction($2)) {
+        if(!driver.addFunction($2, *$6)) {
             std::cerr << "Invalid function name. Maybe it's a redeclaration ?" << std::endl;
             YYERROR;
         }
     }
 
-functionBody:
-    instruction comment NL {
-        driver.enqueueInstruction($1);
-    } functionBody |
-    comment NL {} functionBody |
-    END FUNCTION comment {}
+instructionList:
+    %empty {
+        $$ = std::make_shared<std::list<std::shared_ptr<Instruction>>>();
+    } |
+
+    instruction comment NL instructionList {
+        $4->push_front($1);
+        $$ = $4;
+    }
 
 comment:
     COMMENT | %empty {}

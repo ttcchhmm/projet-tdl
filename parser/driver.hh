@@ -22,11 +22,6 @@ private:
      */
     std::map<std::string, std::shared_ptr<Function>> functions;
 
-    /**
-     * @brief Queued instructions waiting to be added to a function.
-     */
-    std::list<std::shared_ptr<Instruction>> instructionBuffer;
-
 public:
     Driver(JardinHandler * J);
     ~Driver();
@@ -40,14 +35,7 @@ public:
      * 
      * @return True if the function was added, false if it's a redefinition or if the name is empty.
      */
-    bool addFunction(std::string const & name);
-
-    /**
-     * @brief Add an instruction to the instruction queue.
-     * 
-     * @param instruction A pointer to the instruction to add.
-     */
-    void enqueueInstruction(std::shared_ptr<Instruction> instruction);
+    bool addFunction(std::string const & name, std::list<std::shared_ptr<Instruction>> const & instructions);
 
     /**
      * @brief Run the main function.
