@@ -294,27 +294,27 @@ conditionnal:
     }
 
 branch:
-    IF conditionnal BRANCH_START comment NL instructionList END IF {
-        $$ = std::make_shared<If>($2, *$6);
+    IF conditionnal BRANCH_START endl instructionList END IF {
+        $$ = std::make_shared<If>($2, *$5);
     } |
 
-    IF conditionnal BRANCH_START comment NL instructionList ELSE BRANCH_START comment NL instructionList END IF {
-        $$ = std::make_shared<IfElse>($2, *$6, *$11);
+    IF conditionnal BRANCH_START endl instructionList ELSE BRANCH_START endl instructionList END IF {
+        $$ = std::make_shared<IfElse>($2, *$5, *$9);
     } |
 
-    REPEAT math BRANCH_START comment NL instructionList END REPEAT {
-        $$ = std::make_shared<Repeat>($2->calculer(context), *$6);
+    REPEAT math BRANCH_START endl instructionList END REPEAT {
+        $$ = std::make_shared<Repeat>($2->calculer(context), *$5);
     } |
 
-    WHILE conditionnal BRANCH_START comment NL instructionList END WHILE {
-        $$ = std::make_shared<While>($2, *$6);
+    WHILE conditionnal BRANCH_START endl instructionList END WHILE {
+        $$ = std::make_shared<While>($2, *$5);
     }
 
 function:
-    FUNCTION IDENTIFIER BRANCH_START comment NL instructionList END FUNCTION comment {
+    FUNCTION IDENTIFIER BRANCH_START endl instructionList END FUNCTION comment {
         std::cout << "Parsed function " << $2 << std::endl;
 
-        if(!driver.addFunction($2, *$6)) {
+        if(!driver.addFunction($2, *$5)) {
             std::cerr << "Invalid function name. Maybe it's a redeclaration ?" << std::endl;
             YYERROR;
         }
@@ -325,9 +325,9 @@ instructionList:
         $$ = std::make_shared<std::list<std::shared_ptr<Instruction>>>();
     } |
 
-    instruction comment NL instructionList {
-        $4->push_front($1);
-        $$ = $4;
+    instruction endl instructionList {
+        $3->push_front($1);
+        $$ = $3;
     }
 
 comment:
@@ -335,6 +335,9 @@ comment:
 
 times:
     TIMES | %empty {}
+
+endl:
+    comment NL {}
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
