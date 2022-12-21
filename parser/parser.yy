@@ -21,6 +21,7 @@
     #include "../instructions/Turtles.hh"
     #include "../instructions/FunctionCall.hh"
     #include "../instructions/Color.hh"
+    #include "../instructions/Garden.hh"
     #include "../instructions/conditionnals/Not.hh"
     #include "../instructions/conditionnals/If.hh"
     #include "../instructions/conditionnals/IfElse.hh"
@@ -272,6 +273,10 @@ instruction:
 
     COLOR_CHANGE colorTarget COLOR target {
         $$ = std::make_shared<Color>($4, $2, $3);
+    } |
+
+    GARDEN STRING {
+        $$ = std::make_shared<Garden>($2);
     }
 
 // Represent a direction in a conditionnal check.
