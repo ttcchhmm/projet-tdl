@@ -22,6 +22,7 @@
     #include "../instructions/FunctionCall.hh"
     #include "../instructions/Color.hh"
     #include "../instructions/Garden.hh"
+    #include "../instructions/Jump.hh"
     #include "../instructions/conditionnals/Not.hh"
     #include "../instructions/conditionnals/If.hh"
     #include "../instructions/conditionnals/IfElse.hh"
@@ -277,6 +278,14 @@ instruction:
 
     GARDEN STRING {
         $$ = std::make_shared<Garden>($2);
+    } |
+
+    JUMP target {
+        $$ = std::make_shared<Jump>($2, 1);
+    } |
+
+    JUMP math target {
+        $$ = std::make_shared<Jump>($3, $2->calculer(context));
     }
 
 // Represent a direction in a conditionnal check.
