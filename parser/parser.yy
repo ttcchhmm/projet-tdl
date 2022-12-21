@@ -20,6 +20,7 @@
     #include "../instructions/Rotate.hh"
     #include "../instructions/Turtles.hh"
     #include "../instructions/FunctionCall.hh"
+    #include "../instructions/Color.hh"
     #include "../instructions/conditionnals/Not.hh"
     #include "../instructions/conditionnals/If.hh"
     #include "../instructions/conditionnals/IfElse.hh"
@@ -85,6 +86,7 @@
 // --- COLOR INSTRUCTIONS --- //
 %token                  COLOR_CHANGE
 %token                  SHELL
+%token                  PATTERN
 
 // --- TURTLES CREATION --- //
 %token                  TURTLES
@@ -123,7 +125,8 @@
 %type <std::shared_ptr<Instruction>>                                condInstruc
 %type <std::shared_ptr<Instruction>>                                conditionnal
 %type <bool>                                                        not
-%type <CheckDirection>                                              condDirection 
+%type <CheckDirection>                                              condDirection
+%type <ColorZone>                                                   colorTarget
 
 // --- PRECEDENCES --- //
 %left                   PLUS        MINUS
@@ -226,6 +229,20 @@ rotate:
         $$ = directions::RIGHT;
     }
 
+// Represent a zone for coloration.
+colorTarget:
+    %empty {
+        $$ = ColorZone::SHELL;
+    } |
+
+    SHELL {
+        $$ = ColorZone::SHELL;
+    } |
+
+    PATTERN {
+        $$ = ColorZone::PATTERN;
+    }
+
 // Rule that includes every instructions.
 instruction:
     move target {
@@ -251,6 +268,10 @@ instruction:
 
     branch {
         $$ = $1;
+    } |
+
+    COLOR_CHANGE colorTarget COLOR target {
+        $$ = std::make_shared<Color>($4, $2, $3);
     }
 
 // Represent a direction in a conditionnal check.
