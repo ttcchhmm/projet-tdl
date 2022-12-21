@@ -139,11 +139,15 @@ fonction {
 }
 
 couleur {
-    return token::COLOR;
+    return token::COLOR_CHANGE;
 }
 
 carapace {
     return token::SHELL;
+}
+
+motif {
+    return token::PATTERN;
 }
 
 tortues {
