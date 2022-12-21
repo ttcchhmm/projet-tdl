@@ -18,7 +18,7 @@ class Instruction {
          * 
          * @param turtle The targeted turtle.
          */
-        explicit Instruction(std::size_t turtle): _turtle(turtle) {}
+        explicit Instruction(std::size_t turtle);
         Instruction(Instruction const &) = default;
         virtual ~Instruction() = default;
 
@@ -29,7 +29,7 @@ class Instruction {
          * @param target The targeted turtle.
          * @return True if the instruction succeeded, false otherwise.
          */
-        virtual bool execute(JardinRendering* const & garden) = 0;
+        virtual bool execute(JardinRendering* const & garden);
 
     protected:
         [[nodiscard]] std::size_t getTarget() const { return _turtle; }

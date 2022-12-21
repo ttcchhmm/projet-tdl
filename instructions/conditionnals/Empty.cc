@@ -3,6 +3,10 @@
 Empty::Empty(std::size_t turtle, CheckDirection const & dir): Instruction(turtle), _direction(dir) {}
 
 bool Empty::execute(JardinRendering* const & garden) {
+    if(!Instruction::execute(garden)) {
+        return false;
+    }
+
     float delta(0);
 
     switch(_direction) {

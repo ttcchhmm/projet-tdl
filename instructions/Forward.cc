@@ -3,6 +3,10 @@
 Forward::Forward(std::size_t turtle, int amount): Instruction(turtle), _amount(amount) {}
 
 bool Forward::execute(JardinRendering* const & garden) {
+    if(!Instruction::execute(garden)) {
+        return false;
+    }
+
     float orientation = garden->orientation(getTarget());
     int x = garden->position(getTarget()).x();
     int y = garden->position(getTarget()).y();

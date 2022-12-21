@@ -3,6 +3,10 @@
 Rotate::Rotate(std::size_t turtle, directions dir): Instruction(turtle), _dir(dir) {}
 
 bool Rotate::execute(JardinRendering* const & garden) {
+    if(!Instruction::execute(garden)) {
+        return false;
+    }
+
     float newOrientation = garden->orientation(getTarget());
     switch(_dir) {
         case directions::LEFT: {
