@@ -11,8 +11,6 @@ bool Forward::execute(JardinRendering* const & garden) {
     int x = garden->position(getTarget()).x();
     int y = garden->position(getTarget()).y();
 
-    std::cout << orientation << " | " << x << "/" << y << std::endl;
-
     if(orientation == 0) {
         garden->changePosition(getTarget(), x, y - _amount);
     } else if(orientation == 90) {

@@ -132,6 +132,7 @@
 
 %%
 
+// Start of the grammar.
 start:
     function NL {}
     start
@@ -144,6 +145,7 @@ start:
         YYACCEPT;
     }
 
+// Represent a computed number.
 math:
     NUMBER {
         $$ = std::make_shared<Constante>($1);
@@ -178,6 +180,7 @@ math:
         $$ = std::make_shared<ExpressionUnaire>($2, OperateurUnaire::neg);
     }
 
+// The target operator '@'.
 target:
     TARGET {
         $$ = $1 - 1;
@@ -187,28 +190,33 @@ target:
         $$ = 0;
     }
 
+// The movement related instructions.
 move:
     FORWARD math times {
         $$ = $2->calculer(context);
     } |
 
-    BACKWARD math times {
-        $$ = -$2->calculer(context);
-    } |
-    
     FORWARD {
         $$ = 1;
+    } |
+
+    // Going backwards is just negatively going forward.
+
+    BACKWARD math times {
+        $$ = -$2->calculer(context);
     } |
 
     BACKWARD {
         $$ = -1;
     }
 
+// The instruction related to adding new turtles to the field.
 turtles:
     TURTLES math {
         $$ = $2->calculer(context);
     }
 
+// The instruction related to rotating.
 rotate:
     ROTATE LEFT {
         $$ = directions::LEFT;
@@ -217,7 +225,8 @@ rotate:
     ROTATE RIGHT {
         $$ = directions::RIGHT;
     }
-    
+
+// Rule that includes every instructions.
 instruction:
     move target {
         $$ = std::shared_ptr<Instruction>(new Forward($2, $1));
@@ -244,6 +253,7 @@ instruction:
         $$ = $1;
     }
 
+// Represent a direction in a conditionnal check.
 condDirection:
     FRONT {
         $$ = CheckDirection::FRONT;
@@ -261,6 +271,7 @@ condDirection:
         $$ = CheckDirection::RIGHT;
     }
 
+// Represent the value of a conditionnal check.
 condInstruc:
     WALL condDirection target {
         $$ = std::shared_ptr<Instruction>(new Wall($3, $2));
@@ -270,6 +281,7 @@ condInstruc:
         $$ = std::shared_ptr<Instruction>(new Empty($3, $2));
     }
 
+// The negate operator.
 not:
     %empty {
         $$ = false;
@@ -279,6 +291,7 @@ not:
         $$ = true;
     }
 
+// Represent a conditionnal.
 conditionnal:
     not condInstruc {
         if($1) {
@@ -288,54 +301,67 @@ conditionnal:
         }
     }
 
+// A sub-branch of a program.
 branch:
+    // If.
     IF conditionnal BRANCH_START endl instructionList END IF {
         $$ = std::make_shared<If>($2, *$5);
     } |
 
+    // If/else.
     IF conditionnal BRANCH_START endl instructionList ELSE BRANCH_START endl instructionList END IF {
         $$ = std::make_shared<IfElse>($2, *$5, *$9);
     } |
 
+    // Repeat.
     REPEAT math BRANCH_START endl instructionList END REPEAT {
         $$ = std::make_shared<Repeat>($2->calculer(context), *$5);
     } |
 
+    // While.
     WHILE conditionnal BRANCH_START endl instructionList END WHILE {
         $$ = std::make_shared<While>($2, *$5);
     }
 
+// Represent a function.
 function:
     FUNCTION IDENTIFIER BRANCH_START endl instructionList END FUNCTION comment {
         std::cout << "Parsed function " << $2 << std::endl;
 
+        // Add the function to the Driver.
         if(!driver.addFunction($2, *$5)) {
             std::cerr << "Invalid function name. Maybe it's a redeclaration ?" << std::endl;
             YYERROR;
         }
     }
 
+// Represent a list of instructions. It's the body of a function or a branch.
 instructionList:
+    // End of recursion.
     %empty {
         $$ = std::make_shared<std::list<std::shared_ptr<Instruction>>>();
     } |
 
+    // Item in the list.
     instruction endl instructionList {
         $3->push_front($1);
         $$ = $3;
     }
 
+// A space for a comment.
 comment:
     COMMENT | %empty {}
 
+// The optional repetition keyword.
 times:
     TIMES | %empty {}
 
+// The end of a line, with a space for a comment.
 endl:
     comment NL {}
+
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
-    /* std::cerr << "Erreur : " << l << ", " << err_msg << std::endl; */
     std::cerr << "Error at " << l << " : " << err_msg << '.' << std::endl;
 }
