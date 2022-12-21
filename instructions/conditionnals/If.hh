@@ -23,7 +23,7 @@ class If: public Instruction {
          * @param cond The condition.
          * @param instructions The instructions if the condition is true.
          */
-        If(std::shared_ptr<Instruction> cond, std::list<std::shared_ptr<Instruction>> instructions);
+        If(std::shared_ptr<Instruction> cond, std::list<std::shared_ptr<Instruction>> const & instructions);
         If(If const &) = default;
         ~If() override = default;
 
