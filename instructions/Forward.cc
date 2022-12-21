@@ -12,13 +12,29 @@ bool Forward::execute(JardinRendering* const & garden) {
     int y = garden->position(getTarget()).y();
 
     if(orientation == 0) {
-        garden->changePosition(getTarget(), x, y - _amount);
+        if(garden->estVide(x, y - _amount)) {
+            garden->changePosition(getTarget(), x, y - _amount);
+        } else {
+            return false;
+        }
     } else if(orientation == 90) {
-        garden->changePosition(getTarget(), x + _amount, y);
+        if(garden->estVide(x + _amount, y)) {
+            garden->changePosition(getTarget(), x + _amount, y);
+        } else {
+            return false;
+        }
     } else if(orientation == 180) {
-        garden->changePosition(getTarget(), x, y + _amount);
+        if(garden->estVide(x, y + _amount)) {
+            garden->changePosition(getTarget(), x, y + _amount);
+        } else {
+            return false;
+        }
     } else if(orientation == 270) {
-        garden->changePosition(getTarget(), x - _amount, y);
+        if(garden->estVide(x - _amount, y)) {
+            garden->changePosition(getTarget(), x - _amount, y);
+        } else {
+            return false;
+        }
     }
 
     return true;
