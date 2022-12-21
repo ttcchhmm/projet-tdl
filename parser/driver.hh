@@ -40,7 +40,7 @@ public:
     /**
      * @brief Run the main function.
      * 
-     * @return True if a main function was found and executed, false otherwise.
+     * @return True if a main function was found and executed, false if it was not found or if an error occurred at runtime.
      */
     bool runMain();
 

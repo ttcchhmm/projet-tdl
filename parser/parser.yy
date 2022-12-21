@@ -137,7 +137,7 @@ start:
     start
     | NL {
         if(!driver.runMain()) {
-            std::cout << "No main function was found." << std::endl;
+            std::cerr << "An error occurred while running your program. This can happen for two reasons :\n\t1- No main function was found.\n\t2- An instruction threw an error." << std::endl;
             YYERROR;
         }
 

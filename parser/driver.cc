@@ -44,8 +44,7 @@ bool Driver::runMain() {
     if(functions.find("main") == functions.end()) { // Not found
         return false;
     } else {
-        functions.at("main")->execute(getJardin());
-        return true;
+        return functions.at("main")->execute(getJardin());
     }
 }
 
