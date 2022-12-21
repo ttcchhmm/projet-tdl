@@ -12,10 +12,10 @@ PRE_TARGETDEPS += $$PWD/build/expressions/libexpressions.a
 
 QT += widgets 
 # Input
-HEADERS += parser/scanner.hh parser/driver.hh GUI/tortue.hh GUI/jardinHandler.hh GUI/jardinRendering.hh GUI/jardin.hh parser/directions.hh instructions/Instruction.hh instructions/Forward.hh instructions/Rotate.hh instructions/Turtles.hh instructions/Function.hh instructions/FunctionCall.hh instructions/conditionnals/Empty.hh instructions/conditionnals/If.hh instructions/conditionnals/Not.hh instructions/conditionnals/Wall.hh instructions/conditionnals/Repeat.hh instructions/conditionnals/While.hh instructions/conditionnals/IfElse.hh instructions/Color.hh instructions/Garden.hh
+HEADERS += parser/scanner.hh parser/driver.hh GUI/tortue.hh GUI/jardinHandler.hh GUI/jardinRendering.hh GUI/jardin.hh parser/directions.hh instructions/Instruction.hh instructions/Forward.hh instructions/Rotate.hh instructions/Turtles.hh instructions/Function.hh instructions/FunctionCall.hh instructions/conditionnals/Empty.hh instructions/conditionnals/If.hh instructions/conditionnals/Not.hh instructions/conditionnals/Wall.hh instructions/conditionnals/Repeat.hh instructions/conditionnals/While.hh instructions/conditionnals/IfElse.hh instructions/Color.hh instructions/Garden.hh instructions/Jump.hh
 #LEXSOURCES += parser/scanner.ll
 #YACCSOURCES += parser/parser.yy
-SOURCES += parser/main.cc parser/driver.cc GUI/tortue.cc GUI/jardinHandler.cc GUI/jardinRendering.cc GUI/jardin.cc instructions/Instruction.cc instructions/Forward.cc instructions/Rotate.cc instructions/Turtles.cc instructions/Function.cc instructions/FunctionCall.cc instructions/conditionnals/Empty.cc instructions/conditionnals/If.cc instructions/conditionnals/Not.cc instructions/conditionnals/Wall.cc instructions/conditionnals/Repeat.cc instructions/conditionnals/While.cc instructions/conditionnals/IfElse.cc instructions/Color.cc instructions/Garden.cc
+SOURCES += parser/main.cc parser/driver.cc GUI/tortue.cc GUI/jardinHandler.cc GUI/jardinRendering.cc GUI/jardin.cc instructions/Instruction.cc instructions/Forward.cc instructions/Rotate.cc instructions/Turtles.cc instructions/Function.cc instructions/FunctionCall.cc instructions/conditionnals/Empty.cc instructions/conditionnals/If.cc instructions/conditionnals/Not.cc instructions/conditionnals/Wall.cc instructions/conditionnals/Repeat.cc instructions/conditionnals/While.cc instructions/conditionnals/IfElse.cc instructions/Color.cc instructions/Garden.cc instructions/Jump.cc
 
 
 #app.depends = ./parser/parser.hh
