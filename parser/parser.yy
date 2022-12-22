@@ -248,19 +248,19 @@ colorTarget:
 // Rule that includes every instructions.
 instruction:
     move target {
-        $$ = std::shared_ptr<Instruction>(new Forward($2, $1));
+        $$ = std::make_shared<Forward>($2, $1);
     } |
 
     rotate target {
-        $$ = std::shared_ptr<Instruction>(new Rotate($2, $1, 1));
+        $$ = std::make_shared<Rotate>($2, $1, 1);
     } |
 
     rotate math times target {
-        $$ = std::shared_ptr<Instruction>(new Rotate($4, $1, $2->calculer(context)));
+        $$ = std::make_shared<Rotate>($4, $1, $2->calculer(context));
     } |
     
     turtles {
-        $$ = std::shared_ptr<Instruction>(new Turtles($1));
+        $$ = std::make_shared<Turtles>($1);
     } |
 
     IDENTIFIER {
@@ -313,11 +313,11 @@ condDirection:
 // Represent the value of a conditional check.
 condInstruc:
     WALL condDirection target {
-        $$ = std::shared_ptr<Instruction>(new Wall($3, $2));
+        $$ = std::make_shared<Wall>($3, $2);
     } |
 
     EMPTY condDirection target {
-        $$ = std::shared_ptr<Instruction>(new Empty($3, $2));
+        $$ = std::make_shared<Empty>($3, $2);
     }
 
 // The negate operator.
@@ -334,7 +334,7 @@ not:
 conditional:
     not condInstruc {
         if($1) {
-            $$ = std::shared_ptr<Instruction>(new Not($2));
+            $$ = std::make_shared<Not>($2);
         } else {
             $$ = $2;
         }
