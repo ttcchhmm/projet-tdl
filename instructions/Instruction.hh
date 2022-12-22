@@ -27,7 +27,8 @@ class Instruction {
          *
          * @param garden The JardinRendering instance to work with.
          * @param target The targeted turtle.
-         * @return True if the instruction succeeded, false otherwise.
+         * @return If the instruction is executed as a conditional, the value of the test will be returned.
+         *         Otherwise, true will be returned if the execution succeeded and will return false in case of failure.
          */
         virtual bool execute(JardinRendering* const & garden);
 

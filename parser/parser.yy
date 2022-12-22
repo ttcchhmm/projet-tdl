@@ -23,13 +23,13 @@
     #include "../instructions/Color.hh"
     #include "../instructions/Garden.hh"
     #include "../instructions/Jump.hh"
-    #include "../instructions/conditionnals/Not.hh"
-    #include "../instructions/conditionnals/If.hh"
-    #include "../instructions/conditionnals/IfElse.hh"
-    #include "../instructions/conditionnals/Repeat.hh"
-    #include "../instructions/conditionnals/While.hh"
-    #include "../instructions/conditionnals/Empty.hh"
-    #include "../instructions/conditionnals/Wall.hh"
+    #include "../instructions/conditionals/Not.hh"
+    #include "../instructions/conditionals/If.hh"
+    #include "../instructions/conditionals/IfElse.hh"
+    #include "../instructions/conditionals/Repeat.hh"
+    #include "../instructions/conditionals/While.hh"
+    #include "../instructions/conditionals/Empty.hh"
+    #include "../instructions/conditionals/Wall.hh"
 
     class Scanner;
     class Driver;
@@ -125,7 +125,7 @@
 %type <std::shared_ptr<Instruction>>                                branch
 %type <std::shared_ptr<std::list<std::shared_ptr<Instruction>>>>    instructionList
 %type <std::shared_ptr<Instruction>>                                condInstruc
-%type <std::shared_ptr<Instruction>>                                conditionnal
+%type <std::shared_ptr<Instruction>>                                conditional
 %type <bool>                                                        not
 %type <CheckDirection>                                              condDirection
 %type <ColorZone>                                                   colorTarget
@@ -288,7 +288,7 @@ instruction:
         $$ = std::make_shared<Jump>($3, $2->calculer(context));
     }
 
-// Represent a direction in a conditionnal check.
+// Represent a direction in a conditional check.
 condDirection:
     FRONT {
         $$ = CheckDirection::FRONT;
@@ -306,7 +306,7 @@ condDirection:
         $$ = CheckDirection::RIGHT;
     }
 
-// Represent the value of a conditionnal check.
+// Represent the value of a conditional check.
 condInstruc:
     WALL condDirection target {
         $$ = std::shared_ptr<Instruction>(new Wall($3, $2));
@@ -326,8 +326,8 @@ not:
         $$ = true;
     }
 
-// Represent a conditionnal.
-conditionnal:
+// Represent a conditional.
+conditional:
     not condInstruc {
         if($1) {
             $$ = std::shared_ptr<Instruction>(new Not($2));
@@ -339,12 +339,12 @@ conditionnal:
 // A sub-branch of a program.
 branch:
     // If.
-    IF conditionnal BRANCH_START endl instructionList END IF {
+    IF conditional BRANCH_START endl instructionList END IF {
         $$ = std::make_shared<If>($2, *$5);
     } |
 
     // If/else.
-    IF conditionnal BRANCH_START endl instructionList ELSE BRANCH_START endl instructionList END IF {
+    IF conditional BRANCH_START endl instructionList ELSE BRANCH_START endl instructionList END IF {
         $$ = std::make_shared<IfElse>($2, *$5, *$9);
     } |
 
@@ -354,7 +354,7 @@ branch:
     } |
 
     // While.
-    WHILE conditionnal BRANCH_START endl instructionList END WHILE {
+    WHILE conditional BRANCH_START endl instructionList END WHILE {
         $$ = std::make_shared<While>($2, *$5);
     }
 
