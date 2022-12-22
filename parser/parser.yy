@@ -349,8 +349,8 @@ branch:
     } |
 
     // Repeat.
-    REPEAT math BRANCH_START endl instructionList END REPEAT {
-        $$ = std::make_shared<Repeat>($2->calculer(context), *$5);
+    REPEAT math times BRANCH_START endl instructionList END REPEAT {
+        $$ = std::make_shared<Repeat>($2->calculer(context), *$6);
     } |
 
     // While.
