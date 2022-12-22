@@ -26,23 +26,45 @@ using token = yy::Parser::token;
     yylval = lval;
 %}
 
---.* {
-    return token::COMMENT;
-}
-
-fin return token::END;
-
-[0-9]+      {
-    yylval->build<int>(std::atoi(yytext));
-    return token::NUMBER;
-}
-
-"\n"          {
+"\n" {              /* #### PRIMITIVES #### */
     loc->lines();
     return token::NL;
 }
 
-"+" {
+[0-9]+ {
+    yylval->build<int>(std::atoi(yytext));
+    return token::NUMBER;
+}
+
+@[0-9]+ {
+    yylval->build<std::size_t>(std::atoi(yytext+1));
+    return token::TARGET;
+}
+
+#[0-9A-Fa-f]{6} {
+    yylval->build<std::string>(yytext+1);
+    return token::COLOR;
+}
+
+'.*' {
+    std::string str(yytext);
+    yylval->build<std::string>(str.substr(1, str.size() - 2));
+    return token::STRING;
+}
+
+--.* {              /* #### COMMENTS #### */
+    return token::COMMENT;
+}
+
+mur {               /* #### WALL CHECKS #### */
+    return token::WALL;
+}
+
+vide {
+    return token::EMPTY;
+}
+
+"+" {               /* #### ARITHMETICS #### */
     return token::PLUS;
 }
 
@@ -50,12 +72,12 @@ fin return token::END;
     return token::MINUS;
 }
 
-"/" {
-    return token::DIVIDE;
-}
-
 "*" {
     return token::MULTIPLY;
+}
+
+"/" {
+    return token::DIVIDE;
 }
 
 "(" {
@@ -66,31 +88,7 @@ fin return token::END;
     return token::EXPRESSION_END;
 }
 
-mur {
-    return token::WALL;
-}
-
-vide {
-    return token::EMPTY;
-}
-
-"pas de" {
-    return token::NOT;
-}
-
-devant {
-    return token::FRONT;
-}
-
-derriere {
-    return token::BACK;
-}
-
-droite {
-    return token::RIGHT;
-}
-
-avance {
+avance {            /* #### MOVE INSTRUCTIONS #### */
     return token::FORWARD;
 }
 
@@ -110,35 +108,7 @@ fois {
     return token::TIMES;
 }
 
-gauche {
-    return token::LEFT;
-}
-
-si {
-    return token::IF;
-}
-
-sinon {
-    return token::ELSE;
-}
-
-"tant que" {
-    return token::WHILE;
-}
-
-repete {
-    return token::REPEAT;
-}
-
-fonction {
-    return token::FUNCTION;
-}
-
-" :" {
-    return token::BRANCH_START;
-}
-
-couleur {
+couleur {       /* #### COLOR INSTRUCTIONS #### */
     return token::COLOR_CHANGE;
 }
 
@@ -150,28 +120,60 @@ motif {
     return token::PATTERN;
 }
 
-tortues {
+tortues {       /* #### TURTLES CREATION #### */
     return token::TURTLES;
 }
 
-jardin {
+jardin {        /* #### TURTLES CREATION #### */
     return token::GARDEN;
 }
 
-@[0-9]+ {
-    yylval->build<std::size_t>(std::atoi(yytext+1));
-    return token::TARGET;
+gauche {        /* #### DIRECTIONS #### */
+    return token::LEFT;
 }
 
-#[0-9A-Fa-f]{6} {
-    yylval->build<std::string>(yytext+1);
-    return token::COLOR;
+droite {
+    return token::RIGHT;
 }
 
-'.*' {
-    std::string str(yytext);
-    yylval->build<std::string>(str.substr(1, str.size() - 2));
-    return token::STRING;
+devant {
+    return token::FRONT;
+}
+
+derriere {
+    return token::BACK;
+}
+
+" :" {          /* #### BRANCHING #### */
+    return token::BRANCH_START;
+}
+
+si {
+    return token::IF;
+}
+
+sinon {
+    return token::ELSE;
+}
+
+"fin" {
+    return token::END;
+}
+
+"tant que" {
+    return token::WHILE;
+}
+
+repete {
+    return token::REPEAT;
+}
+
+"pas de" {
+    return token::NOT;
+}
+
+fonction {      /* #### FUNCTIONS #### */
+    return token::FUNCTION;
 }
 
 [a-zA-Z][a-zA-Z0-9]* {

@@ -53,70 +53,67 @@
     Contexte context;
 }
 
-// --- PRIMITIVES --- //
+/* #### PRIMITIVES #### */
 %token                  NL
-%token                  END
 %token <int>            NUMBER
-%token <std::string>    IDENTIFIER
 %token <std::size_t>    TARGET
 %token <std::string>    COLOR
 %token <std::string>    STRING
 
-// --- COMMENTS --- //
+/* #### COMMENTS #### */
 %token                  COMMENT
 
-// --- WALL CHECKS --- //
+/* #### WALL CHECKS #### */
 %token                  WALL
 %token                  EMPTY
 
-// --- ARITHMETICS --- //
+/* #### ARITHMETICS #### */
 %token                  PLUS
 %token                  MINUS
 %token                  MULTIPLY
 %token                  DIVIDE
-%token                  NOT
 %token                  EXPRESSION_START
 %token                  EXPRESSION_END
 
-// --- MOVE INSTRUCTIONS --- //
+/* #### MOVE INSTRUCTIONS #### */
 %token                  FORWARD
 %token                  BACKWARD
 %token                  JUMP
 %token                  ROTATE
 %token                  TIMES
 
-// --- COLOR INSTRUCTIONS --- //
+/* #### COLOR INSTRUCTIONS #### */
 %token                  COLOR_CHANGE
 %token                  SHELL
 %token                  PATTERN
 
-// --- TURTLES CREATION --- //
+/* #### TURTLES CREATION #### */
 %token                  TURTLES
 
-// --- GARDEN LOADING --- //
+/* #### GARDEN LOADING #### */
 %token                  GARDEN
 
-// --- DIRECTIONS --- //
+/* #### DIRECTIONS #### */
 %token                  LEFT
 %token                  RIGHT
 %token                  FRONT
 %token                  BACK
 
-// --- BRANCHING --- //
+/* #### BRANCHING #### */
 %token                  BRANCH_START
 %token                  IF
 %token                  ELSE
-
-// --- LOOPS --- //
+%token                  END
 %token                  WHILE
 %token                  REPEAT
+%token                  NOT
 
-// --- FUNCTIONS --- //
+/* #### FUNCTIONS #### */
 %token                  FUNCTION
+%token <std::string>    IDENTIFIER
 
-// --- TYPES --- //
-%type <ExpressionPtr>   math
-
+/* #### TYPES #### */
+%type <ExpressionPtr>                       math
 %type <int>                                 move
 %type <RotationDirections>                  rotate
 %type <int>                                 target
@@ -130,7 +127,7 @@
 %type <CheckDirection>                      condDirection
 %type <ColorZone>                           colorTarget
 
-// --- PRECEDENCES --- //
+/* #### PRECEDENCES #### */
 %left                   PLUS        MINUS
 %left                   MULTIPLY    DIVIDE
 %precedence             NEGATIVE
@@ -401,6 +398,6 @@ endl:
 
 %%
 
-void yy::Parser::error( const location_type &l, const std::string & err_msg) {
+void yy::Parser::error(location_type const & l, std::string const & err_msg) {
     std::cerr << "Error at " << l << " : " << err_msg << '.' << std::endl;
 }
