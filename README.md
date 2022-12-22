@@ -1,4 +1,5 @@
 # Projet noté de Théorie des Langages
+Réalisé par : **Tom CHEDMAIL**
 ## Prérequis
 ### Debian Bullseye
 - `flex`
