@@ -1,6 +1,6 @@
 #include "Rotate.hh"
 
-Rotate::Rotate(std::size_t turtle, directions dir, unsigned int amount): Instruction(turtle), _dir(dir), _amount(amount) {}
+Rotate::Rotate(std::size_t turtle, RotationDirections dir, unsigned int amount): Instruction(turtle), _dir(dir), _amount(amount) {}
 
 bool Rotate::execute(JardinRendering* const & garden) {
     if(!Instruction::execute(garden)) {
@@ -9,7 +9,7 @@ bool Rotate::execute(JardinRendering* const & garden) {
 
     float newOrientation = garden->orientation(getTarget());
     switch(_dir) {
-        case directions::LEFT: {
+        case RotationDirections::COUNTERCLOCKWISE: {
             for(unsigned int i(0); i < _amount; i++) {
                 newOrientation -= 90;
 
@@ -21,7 +21,7 @@ bool Rotate::execute(JardinRendering* const & garden) {
             break;
         }
 
-        case directions::RIGHT: {
+        case RotationDirections::CLOCKWISE: {
             for(unsigned int i(0); i < _amount; i++) {
                 newOrientation += 90;
 

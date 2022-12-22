@@ -14,7 +14,6 @@
     #include "expressionUnaire.hh"
     #include "constante.hh"
     #include "variable.hh"
-    #include "directions.hh"   
 
     #include "../instructions/Forward.hh"
     #include "../instructions/Rotate.hh"
@@ -118,7 +117,7 @@
 %type <ExpressionPtr>   math
 
 %type <int>                                                         move
-%type <directions>                                                  rotate
+%type <RotationDirections>                                          rotate
 %type <int>                                                         target
 %type <std::size_t>                                                 turtles
 %type <std::shared_ptr<Instruction>>                                instruction
@@ -224,11 +223,11 @@ turtles:
 // The instruction related to rotating.
 rotate:
     ROTATE LEFT {
-        $$ = directions::LEFT;
+        $$ = RotationDirections::COUNTERCLOCKWISE;
     } |
 
     ROTATE RIGHT {
-        $$ = directions::RIGHT;
+        $$ = RotationDirections::CLOCKWISE;
     }
 
 // Represent a zone for coloration.
