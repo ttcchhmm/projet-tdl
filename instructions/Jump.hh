@@ -26,5 +26,8 @@ class Jump: public Instruction {
         bool execute(Field garden) override;
 
     private:
+        /**
+         * @brief Display an error message.
+         */
         void displayErrorMessage() const;
 };
