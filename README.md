@@ -32,3 +32,10 @@ make
 Vous trouverez l'exécutable dans `./build/tortue`.
 
 > **Avertissement:** Ne passez pas d'argument `-j` à `make` pour spécifier le nombre de jobs utilisés pour compiler en parallèle le projet, ceci provoque des erreurs. Faites également attention à la variable d'environnement `MAKEFLAGS` si vous l'avez définie sur votre système.
+
+## Configuration de Visual Studio Code
+J'ai personnellement utilisé Visual Studio Code pour réaliser ce projet, et normalement si ce projet est ouvert dans VSCode deux extensions vous seront proposées :
+- [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+- [Yash](https://marketplace.visualstudio.com/items?itemName=daohong-emilio.yash)
+
+Vous pouvez les installer automatiquement depuis la zone de notification de votre éditeur.

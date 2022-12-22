@@ -129,6 +129,7 @@ compile_commands.json
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/c_cpp_properties.json
+!.vscode/extensions.json
 
 # Local History for Visual Studio Code
 .history/
