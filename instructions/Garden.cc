@@ -1,6 +1,7 @@
 #include "Garden.hh"
 
 #include <fstream>
+#include <iostream>
 
 Garden::Garden(std::string const & filename): Instruction(0), _filename(filename) {}
 
@@ -22,6 +23,7 @@ bool Garden::execute(Field garden) {
                 garden->nouvelleTortue();
                 garden->changePosition(garden->getTortues().size() - 1, posX, posY);
             } else { // Malformed garden
+                std::cerr << "Invalid garden file." << std::endl;
                 return false;
             }
 

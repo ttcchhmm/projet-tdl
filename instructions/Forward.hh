@@ -24,4 +24,7 @@ class Forward : public Instruction {
         ~Forward() override = default;
         
         bool execute(Field garden) override;
+
+    private:
+        void displayErrorMessage() const;
 };

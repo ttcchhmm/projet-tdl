@@ -16,28 +16,36 @@ bool Jump::execute(Field garden) {
             if(garden->estVide(x, y - 2)) {
                 garden->changePosition(getTarget(), x, y - 2);
             } else {
+                displayErrorMessage();
                 return false;
             }
         } else if(orientation == 90) {
             if(garden->estVide(x + 2, y)) {
                 garden->changePosition(getTarget(), x + 2, y);
             } else {
+                displayErrorMessage();
                 return false;
             }
         } else if(orientation == 180) {
             if(garden->estVide(x, y + 2)) {
                 garden->changePosition(getTarget(), x, y + 2);
             } else {
+                displayErrorMessage();
                 return false;
             }
         } else if(orientation == 270) {
             if(garden->estVide(x - 2, y)) {
                 garden->changePosition(getTarget(), x - 2, y);
             } else {
+                displayErrorMessage();
                 return false;
             }
         }
     }
 
     return true;
+}
+
+void Jump::displayErrorMessage() const {
+    std::cerr << "Failed to jump the turtle with ID " << getTarget() << "." << std::endl;
 }

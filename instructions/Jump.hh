@@ -24,4 +24,7 @@ class Jump: public Instruction {
         ~Jump() = default;
 
         bool execute(Field garden) override;
+
+    private:
+        void displayErrorMessage() const;
 };
