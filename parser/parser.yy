@@ -252,7 +252,11 @@ instruction:
     } |
 
     rotate target {
-        $$ = std::shared_ptr<Instruction>(new Rotate($2, $1));
+        $$ = std::shared_ptr<Instruction>(new Rotate($2, $1, 1));
+    } |
+
+    rotate math times target {
+        $$ = std::shared_ptr<Instruction>(new Rotate($4, $1, $2->calculer(context)));
     } |
     
     turtles {
