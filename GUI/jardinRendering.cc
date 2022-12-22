@@ -93,10 +93,7 @@ bool JardinRendering::estMur(int x, int y){
 }
 
 bool JardinRendering::estVide(int x, int y){
-     for (unsigned int i=0; i<vides.size(); i++){
-         if ((vides.at(i).getX()==x) and (vides.at(i).getY()==y)) return true; 
-     }
-     return false;
+    return !estMur(x, y);
 }
 
 void JardinRendering::changeTailleJardin(int w, int h){
