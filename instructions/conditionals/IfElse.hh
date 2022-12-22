@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../Utils.hh"
 #include "../Instruction.hh"
 
 /**
@@ -15,12 +16,12 @@ class IfElse: public Instruction {
         /**
          * @brief The instructions to run if true.
          */
-        std::list<std::shared_ptr<Instruction>> _instructionsTrue;
+        InstructionList _instructionsTrue;
 
         /**
          * @brief The instructions to run if false.
          */
-        std::list<std::shared_ptr<Instruction>> _instructionsFalse;
+        InstructionList _instructionsFalse;
 
     public:
         /**
@@ -29,7 +30,7 @@ class IfElse: public Instruction {
          * @param ifTrue The instructions to run if the condition is true.
          * @param ifFalse The instructions to run if the condition is false.
          */
-        IfElse(std::shared_ptr<Instruction> cond, std::list<std::shared_ptr<Instruction>> const & ifTrue, std::list<std::shared_ptr<Instruction>> const & ifFalse);
+        IfElse(std::shared_ptr<Instruction> cond, InstructionList const & ifTrue, InstructionList const & ifFalse);
         IfElse(IfElse const &) = default;
         ~IfElse() override = default;
 

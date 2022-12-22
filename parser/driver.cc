@@ -26,7 +26,7 @@ JardinRendering * Driver::getJardin() {
     return monJardin->getJardinRendering();
 }
 
-bool Driver::addFunction(std::string const & name, std::list<std::shared_ptr<Instruction>> const & instructions) {
+bool Driver::addFunction(std::string const & name, InstructionList const & instructions) {
     if(functions.find(name) != functions.end()) { // Already exists.
         return false;
     }

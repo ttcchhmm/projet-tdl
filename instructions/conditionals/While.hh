@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../Utils.hh"
 #include "../Instruction.hh"
 
 /**
@@ -15,7 +16,7 @@ class While: public Instruction {
         /**
          * @brief The instructions to run.
          */
-        std::list<std::shared_ptr<Instruction>> _instructions;
+        InstructionList _instructions;
 
     public:
         /**
@@ -23,7 +24,7 @@ class While: public Instruction {
          * @param cond The condition.
          * @param instructions The instructions if the condition is true.
          */
-        While(std::shared_ptr<Instruction> cond, std::list<std::shared_ptr<Instruction>> instructions);
+        While(std::shared_ptr<Instruction> cond, InstructionList instructions);
         While(While const &) = default;
         ~While() override = default;
 

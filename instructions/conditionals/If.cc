@@ -1,6 +1,6 @@
 #include "If.hh"
 
-If::If(std::shared_ptr<Instruction> cond, std::list<std::shared_ptr<Instruction>> const & instructions): Instruction(0), _cond(cond), _instructions(instructions) {}
+If::If(std::shared_ptr<Instruction> cond, InstructionList const & instructions): Instruction(0), _cond(cond), _instructions(instructions) {}
 
 bool If::execute(JardinRendering* const & garden) {
     if(_cond->execute(garden)) {

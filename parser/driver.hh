@@ -6,6 +6,7 @@
 #include <QPoint>
 #include <QColor>
 #include <QSize>
+#include "../Utils.hh"
 #include "contexte.hh"
 #include "jardinRendering.hh"
 #include "Function.hh"
@@ -35,7 +36,7 @@ public:
      * 
      * @return True if the function was added, false if it's a redefinition or if the name is empty.
      */
-    bool addFunction(std::string const & name, std::list<std::shared_ptr<Instruction>> const & instructions);
+    bool addFunction(std::string const & name, InstructionList const & instructions);
 
     /**
      * @brief Run the main function.

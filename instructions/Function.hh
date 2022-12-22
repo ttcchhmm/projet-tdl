@@ -1,14 +1,14 @@
 #pragma once
 
+#include "../Utils.hh"
 #include "Instruction.hh"
 
-#include <list>
 #include <string>
 #include <memory>
 
 class Function {
     private:
-        std::list<std::shared_ptr<Instruction>> _instructions;
+        InstructionList _instructions;
 
     public:
         Function() = default;

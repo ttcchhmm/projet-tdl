@@ -15,6 +15,7 @@
     #include "constante.hh"
     #include "variable.hh"
 
+    #include "../Utils.hh"
     #include "../instructions/Forward.hh"
     #include "../instructions/Rotate.hh"
     #include "../instructions/Turtles.hh"
@@ -116,18 +117,18 @@
 // --- TYPES --- //
 %type <ExpressionPtr>   math
 
-%type <int>                                                         move
-%type <RotationDirections>                                          rotate
-%type <int>                                                         target
-%type <std::size_t>                                                 turtles
-%type <std::shared_ptr<Instruction>>                                instruction
-%type <std::shared_ptr<Instruction>>                                branch
-%type <std::shared_ptr<std::list<std::shared_ptr<Instruction>>>>    instructionList
-%type <std::shared_ptr<Instruction>>                                condInstruc
-%type <std::shared_ptr<Instruction>>                                conditional
-%type <bool>                                                        not
-%type <CheckDirection>                                              condDirection
-%type <ColorZone>                                                   colorTarget
+%type <int>                                 move
+%type <RotationDirections>                  rotate
+%type <int>                                 target
+%type <std::size_t>                         turtles
+%type <std::shared_ptr<Instruction>>        instruction
+%type <std::shared_ptr<Instruction>>        branch
+%type <std::shared_ptr<InstructionList>>    instructionList
+%type <std::shared_ptr<Instruction>>        condInstruc
+%type <std::shared_ptr<Instruction>>        conditional
+%type <bool>                                not
+%type <CheckDirection>                      condDirection
+%type <ColorZone>                           colorTarget
 
 // --- PRECEDENCES --- //
 %left                   PLUS        MINUS
@@ -377,7 +378,7 @@ function:
 instructionList:
     // End of recursion.
     %empty {
-        $$ = std::make_shared<std::list<std::shared_ptr<Instruction>>>();
+        $$ = std::make_shared<InstructionList>();
     } |
 
     // Item in the list.

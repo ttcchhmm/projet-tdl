@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../Utils.hh"
 #include "../Instruction.hh"
 
 /**
@@ -15,7 +16,7 @@ class Repeat: public Instruction {
         /**
          * @brief The instructions to run.
          */
-        std::list<std::shared_ptr<Instruction>> _instructions;
+        InstructionList _instructions;
 
     public:
         /**
@@ -23,7 +24,7 @@ class Repeat: public Instruction {
          * @param amount The amount of times the instructions will be looped.
          * @param instructions The instructions to loop.
          */
-        Repeat(unsigned int amount, std::list<std::shared_ptr<Instruction>> instructions);
+        Repeat(unsigned int amount, InstructionList instructions);
         Repeat(Repeat const &) = default;
         ~Repeat() = default;
 
