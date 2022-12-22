@@ -1,5 +1,8 @@
 # Projet noté de Théorie des Langages
 Réalisé par : **Tom CHEDMAIL**
+
+<center><img src="./GUI/IMG/tortue.png" alt="Logo projet" height="100" /></center>
+
 ## Prérequis
 ### Debian Bullseye
 - `flex`
