@@ -2,7 +2,7 @@
 
 Jump::Jump(std::size_t turtle, unsigned int amount): Instruction(turtle), _amount(amount) {}
 
-bool Jump::execute(JardinRendering * const & garden) {
+bool Jump::execute(Field garden) {
     if(!Instruction::execute(garden)) {
         return false;
     }

@@ -5,7 +5,7 @@
 
 Color::Color(std::size_t _turtle, ColorZone const & zone, std::string const & colorHexa): Instruction(_turtle), _zone(zone), _colorHexa(colorHexa) {}
 
-bool Color::execute(JardinRendering* const & garden) {
+bool Color::execute(Field garden) {
     if(!Instruction::execute(garden)) {
         return false;
     }

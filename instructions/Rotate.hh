@@ -44,5 +44,5 @@ class Rotate : public Instruction {
         Rotate(Rotate const &) = default;
         ~Rotate() override = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

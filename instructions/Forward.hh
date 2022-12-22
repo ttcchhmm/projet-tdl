@@ -23,5 +23,5 @@ class Forward : public Instruction {
         Forward(Forward const &) = default;
         ~Forward() override = default;
         
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

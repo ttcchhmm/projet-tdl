@@ -23,5 +23,5 @@ class Jump: public Instruction {
         Jump(Jump const &) = default;
         ~Jump() = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "jardinRendering.hh"
+#include "../Utils.hh"
 
 /**
  * @brief Represent an atomic instruction modifing the state of the garden or one of its turtles.
@@ -30,7 +30,7 @@ class Instruction {
          * @return If the instruction is executed as a conditional, the value of the test will be returned.
          *         Otherwise, true will be returned if the execution succeeded and will return false in case of failure.
          */
-        virtual bool execute(JardinRendering* const & garden);
+        virtual bool execute(Field garden);
 
     protected:
         [[nodiscard]] std::size_t getTarget() const { return _turtle; }

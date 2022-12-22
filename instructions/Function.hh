@@ -28,5 +28,5 @@ class Function {
          * @param garden The garden to use as context.
          * @return 
          */
-        bool execute(JardinRendering* const & garden) const;
+        bool execute(Field garden) const;
 };

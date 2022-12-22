@@ -19,5 +19,5 @@ class Not: public Instruction {
         Not(Not const &) = default;
         ~Not() override = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

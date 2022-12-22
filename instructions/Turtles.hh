@@ -15,5 +15,5 @@ class Turtles: public Instruction {
         Turtles(Turtles const &) = default;
         ~Turtles() = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

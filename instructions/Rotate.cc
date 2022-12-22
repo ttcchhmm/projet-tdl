@@ -2,7 +2,7 @@
 
 Rotate::Rotate(std::size_t turtle, RotationDirections dir, unsigned int amount): Instruction(turtle), _dir(dir), _amount(amount) {}
 
-bool Rotate::execute(JardinRendering* const & garden) {
+bool Rotate::execute(Field garden) {
     if(!Instruction::execute(garden)) {
         return false;
     }

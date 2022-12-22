@@ -28,5 +28,5 @@ class While: public Instruction {
         While(While const &) = default;
         ~While() override = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

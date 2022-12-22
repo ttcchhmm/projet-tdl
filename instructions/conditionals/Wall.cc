@@ -2,6 +2,6 @@
 
 Wall::Wall(std::size_t turtle, CheckDirection const & dir): Empty(turtle, dir) {}
 
-bool Wall::execute(JardinRendering* const & garden) {
+bool Wall::execute(Field garden) {
     return !Empty::execute(garden);
 }

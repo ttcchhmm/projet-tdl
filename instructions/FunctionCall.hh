@@ -24,5 +24,5 @@ class FunctionCall: public Instruction {
         FunctionCall(FunctionCall const &) = default;
         ~FunctionCall() override = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

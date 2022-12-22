@@ -4,7 +4,7 @@
 
 Garden::Garden(std::string const & filename): Instruction(0), _filename(filename) {}
 
-bool Garden::execute(JardinRendering* const & garden) {
+bool Garden::execute(Field garden) {
     garden->nettoyerJardin();
 
     std::ifstream is(_filename);

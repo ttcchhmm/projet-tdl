@@ -28,5 +28,5 @@ class If: public Instruction {
         If(If const &) = default;
         ~If() override = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

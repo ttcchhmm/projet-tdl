@@ -45,5 +45,5 @@ class Empty: public Instruction {
         Empty(Empty const &) = default;
         ~Empty() = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

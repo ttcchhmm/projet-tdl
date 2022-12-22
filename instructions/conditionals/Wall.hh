@@ -17,5 +17,5 @@ class Wall: public Empty {
         Wall(Wall const &) = default;
         ~Wall() override = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

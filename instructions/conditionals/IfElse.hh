@@ -34,5 +34,5 @@ class IfElse: public Instruction {
         IfElse(IfElse const &) = default;
         ~IfElse() override = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

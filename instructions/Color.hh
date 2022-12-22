@@ -46,5 +46,5 @@ class Color: public Instruction {
         Color(Color const &) = default;
         ~Color() override = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

@@ -28,5 +28,5 @@ class Repeat: public Instruction {
         Repeat(Repeat const &) = default;
         ~Repeat() = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };

@@ -24,5 +24,5 @@ class Garden: public Instruction {
         Garden(Garden const &) = default;
         ~Garden() override = default;
 
-        bool execute(JardinRendering* const & garden) override;
+        bool execute(Field garden) override;
 };
